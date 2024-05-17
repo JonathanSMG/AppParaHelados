@@ -2,11 +2,15 @@ package com.uleam.appparahelados.data.Usuario
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-
 @Entity(tableName = "usuarios")
 data class Usuario(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
     val nombre: String,
-    val rol: String // 'admin' o 'cliente'
-)
+    val correo: String,
+    val pass: String,
+    val telefono: String,
+    val direccion: String,
+    val rol: String
+) {
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0
+}

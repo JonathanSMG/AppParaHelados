@@ -13,22 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.example.inventory.ui.theme
 
-package com.example.inventory
+import androidx.compose.foundation.shape.CutCornerShape
+import androidx.compose.material3.Shapes
+import androidx.compose.ui.unit.dp
 
-import android.app.Application
-import com.example.inventory.data.AppContainer
-import com.example.inventory.data.AppDataContainer
+val Shapes = Shapes(
 
-class HeladosApplication : Application() {
-
-    /**
-     * AppContainer instance used by the rest of classes to obtain dependencies
-     */
-    lateinit var container: AppContainer
-
-    override fun onCreate() {
-        super.onCreate()
-        container = AppDataContainer(this)
-    }
-}
+    extraSmall = CutCornerShape(topEnd = 8.dp, bottomStart = 8.dp),
+    small = CutCornerShape(topEnd = 8.dp, bottomStart = 8.dp),
+    medium = CutCornerShape(topEnd = 16.dp, bottomStart = 16.dp)
+)
