@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("com.google.devtools.ksp") version "1.9.20-1.0.14"
+
 }
 
 android {
@@ -51,6 +53,25 @@ android {
 
 dependencies {
 
+    // Import the Compose BOM
+    implementation(platform("androidx.compose:compose-bom:2023.10.01"))
+    implementation("androidx.activity:activity-compose:1.8.1")
+    implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-tooling")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
+    implementation("androidx.navigation:navigation-compose:2.7.5")
+//Room
+    val room_version = "2.6.1"
+
+    //noinspection GradleDependency
+    implementation("androidx.room:room-runtime:$room_version")
+    ksp("androidx.room:room-compiler:$room_version")
+    //noinspection GradleDependency
+    implementation("androidx.room:room-ktx:$room_version")
+    // Testing
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
