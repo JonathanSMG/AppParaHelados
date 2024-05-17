@@ -15,8 +15,8 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.inventory.ui.navigation.NavigationDestination
 import com.uleam.appparahelados.R
+import com.uleam.appparahelados.ui.navigation.NavigationDestination
 
 object RegistroScreen : NavigationDestination {
     override val route = "registro"
