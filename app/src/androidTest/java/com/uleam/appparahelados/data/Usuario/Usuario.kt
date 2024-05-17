@@ -1,12 +1,12 @@
-package com.example.appparahelados.data
+package com.uleam.appparahelados.data.Usuario
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "toppings")
-data class Topping(
+@Entity(tableName = "usuarios")
+data class Usuario(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val nombre: String,
-    val precio: Double
+    val rol: String // 'admin' o 'cliente'
 )

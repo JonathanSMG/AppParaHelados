@@ -1,9 +1,10 @@
-package com.example.appparahelados.data
+package com.uleam.appparahelados.data.HeladoPersonalizado
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.ForeignKey
-import com.example.appparahelados.data.Helado.Helado
+import com.uleam.appparahelados.data.Helado.Helado
+import com.uleam.appparahelados.data.Usuario.Usuario
 
 @Entity(
     tableName = "helados_personalizados",

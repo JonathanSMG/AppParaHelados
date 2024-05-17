@@ -1,7 +1,9 @@
-package com.example.appparahelados.data
+package com.uleam.appparahelados.data.HeladoTopping
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import com.uleam.appparahelados.data.HeladoPersonalizado.HeladoPersonalizado
+import com.uleam.appparahelados.data.Topping.Topping
 
 @Entity(
     tableName = "helado_toppings",

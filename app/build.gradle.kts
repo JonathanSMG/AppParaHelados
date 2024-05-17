@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.appparahelados"
+    namespace = "com.uleam.appparahelados"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.appparahelados"
+        applicationId = "com.uleam.appparahelados"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

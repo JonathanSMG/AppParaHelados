@@ -1,4 +1,4 @@
-package com.example.appparahelados.data.Helado
+package com.uleam.appparahelados.data.Helado
 
 import androidx.room.*
 
