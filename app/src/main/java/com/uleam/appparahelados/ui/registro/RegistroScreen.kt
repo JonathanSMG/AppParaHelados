@@ -1,108 +1,151 @@
 package com.uleam.appparahelados.ui.registro
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.uleam.appparahelados.R
+import com.uleam.appparahelados.ui.AppViewModelProvider
 import com.uleam.appparahelados.ui.navigation.NavigationDestination
+import com.uleam.appparahelados.ui.theme.md_theme_light_onSecondary
+import com.uleam.appparahelados.ui.theme.md_theme_light_onSurfaceVariant
+import com.uleam.appparahelados.ui.theme.md_theme_light_secondary
+import kotlinx.coroutines.delay
 
-object RegistroScreen : NavigationDestination {
+object RegistroDistinationScreen : NavigationDestination {
     override val route = "registro"
     override val titleRes = R.string.app_name
 
     @Composable
     override fun Content(navController: NavController) {
-        Surface(color = MaterialTheme.colorScheme.background) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+        TODO("Not yet implemented")
+    }
+
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    fun RegistroScreen(
+        viewModel: RegisterViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    ) {
+        var nombre by remember { mutableStateOf("") }
+        var correo by remember { mutableStateOf("") }
+        var direccion by remember { mutableStateOf("") }
+        var pass by remember { mutableStateOf("") }
+        var telefono by remember { mutableStateOf("") }
+
+        val alertDialogVisibleState = remember { mutableStateOf(false) }
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
+            val textFieldModifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 8.dp)
+
+            val buttonModifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp, horizontal = 16.dp)
+
+            OutlinedTextField(
+                value = nombre,
+                onValueChange = { nombre = it },
+                label = { Text(text = "Nombre") },
+                modifier = textFieldModifier,
+                colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = md_theme_light_onSurfaceVariant)
+            )
+            OutlinedTextField(
+                value = correo,
+                onValueChange = { correo = it },
+                label = { Text(text = "Correo electrónico") },
+                modifier = textFieldModifier,
+                colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = md_theme_light_onSurfaceVariant)
+            )
+            OutlinedTextField(
+                value = direccion,
+                onValueChange = { direccion = it },
+                label = { Text(text = "Dirección") },
+                modifier = textFieldModifier,
+                colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = md_theme_light_onSurfaceVariant)
+            )
+            OutlinedTextField(
+                value = pass,
+                onValueChange = { pass = it },
+                label = { Text(text = "Contraseña") },
+                modifier = textFieldModifier,
+                colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = md_theme_light_onSurfaceVariant)
+            )
+            OutlinedTextField(
+                value = telefono,
+                onValueChange = { telefono = it },
+                label = { Text(text = "Teléfono") },
+                modifier = textFieldModifier,
+                colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = md_theme_light_onSurfaceVariant)
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+                onClick = {
+                    // Validar los datos con el ViewModel
+                    viewModel.onSubmitButtonClick(nombre, correo, direccion, pass, telefono)
+                    // Mostrar AlertDialog solo si la validación es exitosa
+                    alertDialogVisibleState.value = true
+                },
+                modifier = buttonModifier,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = md_theme_light_secondary,
+                    contentColor = md_theme_light_onSecondary
+                )
             ) {
-                Text(text = "Registro", style = MaterialTheme.typography.titleMedium)
-                Spacer(modifier = Modifier.height(16.dp))
+                Text(text = "Registrarse")
+            }
 
-                RegistroForm()
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                Button(onClick = {
-                    // Aquí puedes agregar la lógica para el registro
-                }) {
-                    Text("Registrarse")
+            // Mostrar el AlertDialog si es necesario
+            if (alertDialogVisibleState.value) {
+                RegistroExitosoDialog {
+                    alertDialogVisibleState.value = false
                 }
             }
         }
-    }
-}
+      }
 
-@SuppressLint("UnrememberedMutableState")
-@Composable
-private fun RegistroForm() {
-    val nombreState = mutableStateOf(TextFieldValue())
-    val correoState = mutableStateOf(TextFieldValue())
-    val contraseñaState = mutableStateOf(TextFieldValue())
-    val telefonoState = mutableStateOf(TextFieldValue())
-    val direccionState = mutableStateOf(TextFieldValue())
-
-    Column(
-        modifier = Modifier.fillMaxWidth()
+    @Composable
+    fun RegistroExitosoDialog(onClose: () -> Unit
     ) {
-        // Campo para el nombre
-        TextField(
-            value = nombreState.value,
-            onValueChange = { nombreState.value = it },
-            label = { Text("Nombre") },
-            modifier = Modifier.fillMaxWidth()
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // Campo para el correo electrónico
-        TextField(
-            value = correoState.value,
-            onValueChange = { correoState.value = it },
-            label = { Text("Correo electrónico") },
-            modifier = Modifier.fillMaxWidth()
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // Campo para la contraseña
-        TextField(
-            value = contraseñaState.value,
-            onValueChange = { contraseñaState.value = it },
-            label = { Text("Contraseña") },
-            modifier = Modifier.fillMaxWidth()
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // Campo para el teléfono
-        TextField(
-            value = telefonoState.value,
-            onValueChange = { telefonoState.value = it },
-            label = { Text("Teléfono") },
-            modifier = Modifier.fillMaxWidth()
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // Campo para la dirección
-        TextField(
-            value = direccionState.value,
-            onValueChange = { direccionState.value = it },
-            label = { Text("Dirección") },
-            modifier = Modifier.fillMaxWidth()
+        AlertDialog(
+            onDismissRequest = onClose,
+            title = { Text("¡Registro exitoso!") },
+            text = { Text("¡Tu registro se ha completado exitosamente! ¿Deseas iniciar sesión ahora?") },
+            confirmButton = {
+                Button(
+                    onClick = onClose,
+                    colors = ButtonDefaults.buttonColors(
+                            containerColor = md_theme_light_secondary,
+                    contentColor = md_theme_light_onSecondary
+                )
+                ) {
+                    Text("OK")
+                }
+            }
         )
     }
 }
+
+

@@ -10,5 +10,7 @@ interface UsuarioRepository {
     suspend fun insertUsuario(usuario: Usuario)
     suspend fun deleteUsuario(usuario: Usuario)
     suspend fun updateUsuario(usuario: Usuario)
+    suspend fun getUsuarioByUsername(correo: String): Usuario?
+    suspend fun areCredentialsValid(correo: String, password: String): Boolean
 
 }

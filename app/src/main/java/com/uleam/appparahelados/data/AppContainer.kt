@@ -17,22 +17,32 @@
 package com.uleam.appparahelados.data
 
 import android.content.Context
+import com.uleam.appparahelados.data.Helado.OfflineHeladosRepository
 import com.uleam.appparahelados.data.Helado.interfaces.HeladoDao
+import com.uleam.appparahelados.data.Helado.interfaces.HeladoRepository
 import com.uleam.appparahelados.data.HeladoDatabase
+import com.uleam.appparahelados.data.HeladoPersonalizado.OfflineHeladosPersonalizadosRepository
 import com.uleam.appparahelados.data.HeladoPersonalizado.interfaces.HeladoPersonalizadoDao
+import com.uleam.appparahelados.data.HeladoPersonalizado.interfaces.HeladoPersonalizadoRepository
+import com.uleam.appparahelados.data.HeladoTopping.OfflineHeladoToppingsRepository
 import com.uleam.appparahelados.data.HeladoTopping.interfaces.HeladoToppingDao
+import com.uleam.appparahelados.data.HeladoTopping.interfaces.HeladoToppingRepository
+import com.uleam.appparahelados.data.Topping.OfflineToppingsRepository
 import com.uleam.appparahelados.data.Topping.interfaces.ToppingDao
+import com.uleam.appparahelados.data.Topping.interfaces.ToppingRepository
+import com.uleam.appparahelados.data.Usuario.OfflineUsuariosRepository
 import com.uleam.appparahelados.data.Usuario.interfaces.UsuarioDao
+import com.uleam.appparahelados.data.Usuario.interfaces.UsuarioRepository
 
 /**
  * App container for Dependency injection.
  */
 interface AppContainer {
-    val usuarioDao: UsuarioDao
-    val heladoDao: HeladoDao
-    val toppingDao: ToppingDao
-    val heladoPersonalizadoDao: HeladoPersonalizadoDao
-    val heladoToppingDao: HeladoToppingDao
+    val usuarioRepository: UsuarioRepository
+    val heladoRepository: HeladoRepository
+    val toppingRepository: ToppingRepository
+    val heladoPersonalizadoRepository: HeladoPersonalizadoRepository
+    val heladoToppingRepository: HeladoToppingRepository
 }
 
 /**
@@ -42,35 +52,35 @@ class AppDataContainer(private val context: Context) : AppContainer {
     /**
      * Implementation for [UsuarioDao]
      */
-    override val usuarioDao: UsuarioDao by lazy {
-        HeladoDatabase.getDatabase(context).usuarioDao()
+    override val usuarioRepository: UsuarioRepository by lazy {
+        OfflineUsuariosRepository(HeladoDatabase.getDatabase(context).usuarioDao())
     }
 
     /**
      * Implementation for [HeladoDao]
      */
-    override val heladoDao: HeladoDao by lazy {
-        HeladoDatabase.getDatabase(context).heladoDao()
+    override val heladoRepository: HeladoRepository by lazy {
+        OfflineHeladosRepository(HeladoDatabase.getDatabase(context).heladoDao())
     }
 
     /**
      * Implementation for [ToppingDao]
      */
-    override val toppingDao: ToppingDao by lazy {
-        HeladoDatabase.getDatabase(context).toppingDao()
+    override val toppingRepository: ToppingRepository by lazy {
+        OfflineToppingsRepository(HeladoDatabase.getDatabase(context).toppingDao())
     }
 
     /**
      * Implementation for [HeladoPersonalizadoDao]
      */
-    override val heladoPersonalizadoDao: HeladoPersonalizadoDao by lazy {
-        HeladoDatabase.getDatabase(context).heladoPersonalizadoDao()
+    override val heladoPersonalizadoRepository: HeladoPersonalizadoRepository by lazy {
+        OfflineHeladosPersonalizadosRepository(HeladoDatabase.getDatabase(context).heladoPersonalizadoDao())
     }
 
     /**
      * Implementation for [HeladoToppingDao]
      */
-    override val heladoToppingDao: HeladoToppingDao by lazy {
-        HeladoDatabase.getDatabase(context).heladoToppingDao()
+    override val heladoToppingRepository: HeladoToppingRepository by lazy {
+        OfflineHeladoToppingsRepository(HeladoDatabase.getDatabase(context).heladoToppingDao())
     }
 }

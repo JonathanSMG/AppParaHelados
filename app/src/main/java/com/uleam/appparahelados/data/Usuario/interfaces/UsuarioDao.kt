@@ -20,4 +20,8 @@ interface UsuarioDao {
 
     @Query("SELECT * from usuarios ORDER BY nombre ASC")
     fun getAllUsuarios(): Flow<List<Usuario>>
+
+    @Query("SELECT * FROM usuarios WHERE correo = :correo LIMIT 1")
+    suspend fun getUsuarioByUsername(correo: String): Usuario?
+
 }

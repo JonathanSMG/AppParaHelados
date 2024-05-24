@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">AppParaHelados</string>
+    <string name="back_button">Regresar</string>
+    <string name="registros_title">Registros</string>
+    <string name="registro_Edit">Editar</string>
+
+    <string name="registro_exitoso">Registro exitoso</string>
+    <string name="registrarse">Registrarse</string>
+
 </resources>
