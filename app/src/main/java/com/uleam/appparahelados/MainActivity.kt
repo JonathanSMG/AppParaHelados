@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.uleam.appparahelados.ui.navigation.NavigationController
-import com.uleam.appparahelados.ui.theme.InventoryTheme
+import com.uleam.appparahelados.ui.theme.HeladossTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
 @Preview
 @Composable
 fun DefaultPreview() {
-    InventoryTheme {
+    HeladossTheme {
         Surface {
         }
     }
