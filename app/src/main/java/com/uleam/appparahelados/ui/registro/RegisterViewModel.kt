@@ -9,6 +9,11 @@ import kotlinx.coroutines.*
 
 class RegisterViewModel(private val repository: UsuarioRepository) : ViewModel() {
 
+    // Nueva LiveData para navegar a la pantalla de inicio de sesión
+    private val _navigateToLogin = MutableLiveData<Boolean>()
+    val navigateToLogin: LiveData<Boolean>
+        get() = _navigateToLogin
+
     fun String.isValidEmail(): Boolean {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
     }
@@ -38,9 +43,11 @@ class RegisterViewModel(private val repository: UsuarioRepository) : ViewModel()
                 val usuarioExistente = repository.getUsuarioByUsername(correo)
                 if (usuarioExistente != null) {
                     Log.i("APP HELADOS", "El correo electrónico ya está registrado.")
+                    _navigateToLogin.postValue(true) // Indicar que se debe navegar a la pantalla de login
                 } else {
                     insert(Usuario(nombre, correo, direccion, pass, telefono, "Administrador"))
                     Log.i("APP HELADOS", "Registro exitoso")
+                    _navigateTo.postValue(true) // Indicar que el registro fue exitoso
                 }
             }
         }
