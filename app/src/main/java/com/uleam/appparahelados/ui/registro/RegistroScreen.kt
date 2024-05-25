@@ -50,131 +50,131 @@ import com.uleam.appparahelados.ui.theme.md_theme_light_secondary
 object RegistroDistinationScreen : NavigationController {
     override val route = "registro"
     override val titleRes = R.string.registros_title
-    }
-    @OptIn(ExperimentalMaterial3Api::class)
-    @Composable
-    fun RegistroScreen(
-        navigatetoLogin: () -> Unit,
-        viewModel: RegisterViewModel = viewModel(factory = AppViewModelProvider.Factory)
+}
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun RegistroScreen(
+    navigatetoLogin: () -> Unit,
+    viewModel: RegisterViewModel = viewModel(factory = AppViewModelProvider.Factory)
+) {
+    var nombre by remember { mutableStateOf("") }
+    var correo by remember { mutableStateOf("") }
+    var direccion by remember { mutableStateOf("") }
+    var pass by remember { mutableStateOf("") }
+    var telefono by remember { mutableStateOf("") }
+
+    val alertDialogVisibleState = remember { mutableStateOf(false) }
+    val scrollState = rememberScrollState()
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Color(0xFFF5F5F5))
+            .verticalScroll(rememberScrollState())
     ) {
-        var nombre by remember { mutableStateOf("") }
-        var correo by remember { mutableStateOf("") }
-        var direccion by remember { mutableStateOf("") }
-        var pass by remember { mutableStateOf("") }
-        var telefono by remember { mutableStateOf("") }
-
-        val alertDialogVisibleState = remember { mutableStateOf(false) }
-        val scrollState = rememberScrollState()
-
-        Box(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(color = Color(0xFFF5F5F5))
-                .verticalScroll(rememberScrollState())
+                .padding(horizontal = 16.dp) // Añadir padding horizontal al Column
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp) // Añadir padding horizontal al Column
-            ) {
-                Encabezado{navigatetoLogin()}
+            Encabezado{navigatetoLogin()}
 
-                Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-                val textFieldModifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(16.dp))
-                    .padding(vertical = 4.dp, horizontal = 16.dp)
+            val textFieldModifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(16.dp))
+                .padding(vertical = 4.dp, horizontal = 16.dp)
 
-                val buttonModifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp, horizontal = 16.dp)
+            val buttonModifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp, horizontal = 16.dp)
 
-                OutlinedTextField(
-                    value = nombre,
-                    onValueChange = { nombre = it },
-                    label = { Text(text = "Nombre") },
-                    modifier = textFieldModifier,
-                    colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = md_theme_light_onSurfaceVariant)
-                )
-                OutlinedTextField(
-                    value = correo,
-                    onValueChange = { correo = it },
-                    label = { Text(text = "Correo electrónico") },
-                    modifier = textFieldModifier,
-                    colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = md_theme_light_onSurfaceVariant)
-                )
-                OutlinedTextField(
-                    value = direccion,
-                    onValueChange = { direccion = it },
-                    label = { Text(text = "Dirección") },
-                    modifier = textFieldModifier,
-                    colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = md_theme_light_onSurfaceVariant)
-                )
-                OutlinedTextField(
-                    value = pass,
-                    onValueChange = { pass = it },
-                    label = { Text(text = "Contraseña") },
-                    modifier = textFieldModifier,
-                    colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = md_theme_light_onSurfaceVariant)
-                )
-                OutlinedTextField(
-                    value = telefono,
-                    onValueChange = { telefono = it },
-                    label = { Text(text = "Teléfono") },
-                    modifier = textFieldModifier,
-                    colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = md_theme_light_onSurfaceVariant)
-                )
+            OutlinedTextField(
+                value = nombre,
+                onValueChange = { nombre = it },
+                label = { Text(text = "Nombre") },
+                modifier = textFieldModifier,
+                colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = md_theme_light_onSurfaceVariant)
+            )
+            OutlinedTextField(
+                value = correo,
+                onValueChange = { correo = it },
+                label = { Text(text = "Correo electrónico") },
+                modifier = textFieldModifier,
+                colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = md_theme_light_onSurfaceVariant)
+            )
+            OutlinedTextField(
+                value = direccion,
+                onValueChange = { direccion = it },
+                label = { Text(text = "Dirección") },
+                modifier = textFieldModifier,
+                colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = md_theme_light_onSurfaceVariant)
+            )
+            OutlinedTextField(
+                value = pass,
+                onValueChange = { pass = it },
+                label = { Text(text = "Contraseña") },
+                modifier = textFieldModifier,
+                colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = md_theme_light_onSurfaceVariant)
+            )
+            OutlinedTextField(
+                value = telefono,
+                onValueChange = { telefono = it },
+                label = { Text(text = "Teléfono") },
+                modifier = textFieldModifier,
+                colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = md_theme_light_onSurfaceVariant)
+            )
 
-                Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-                Button(
-                    onClick = {
-                        viewModel.onSubmitButtonClick(nombre, correo, direccion, pass, telefono)
-                        alertDialogVisibleState.value = true
-                    },
-                    modifier = buttonModifier,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Red,
-                        contentColor = md_theme_light_onSecondary
-                    )
-                ) {
-                    Text(text = "Registrarse")
-                }
-
-                // Mostrar el AlertDialog si es necesario
-                if (alertDialogVisibleState.value) {
-                    RegistroExitosoDialog {
-                        alertDialogVisibleState.value = false
-                    }
-                }
-            }
-        }
-        LaunchedEffect(Unit) {
-            scrollState.animateScrollTo(scrollState.maxValue)
-        }
-      }
-
-    @Composable
-    fun RegistroExitosoDialog(onClose: () -> Unit
-    ) {
-        AlertDialog(
-            onDismissRequest = onClose,
-            title = { Text("¡Registro exitoso!") },
-            text = { Text("¡Tu registro se ha completado exitosamente! ¿Deseas iniciar sesión ahora?") },
-            confirmButton = {
-                Button(
-                    onClick = onClose,
-                    colors = ButtonDefaults.buttonColors(
-                            containerColor = md_theme_light_secondary,
+            Button(
+                onClick = {
+                    viewModel.onSubmitButtonClick(nombre, correo, direccion, pass, telefono)
+                    alertDialogVisibleState.value = true
+                },
+                modifier = buttonModifier,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Red,
                     contentColor = md_theme_light_onSecondary
                 )
-                ) {
-                    Text("OK")
+            ) {
+                Text(text = "Registrarse")
+            }
+
+            // Mostrar el AlertDialog si es necesario
+            if (alertDialogVisibleState.value) {
+                RegistroExitosoDialog {
+                    alertDialogVisibleState.value = false
                 }
             }
-        )
+        }
     }
+    LaunchedEffect(Unit) {
+        scrollState.animateScrollTo(scrollState.maxValue)
+    }
+}
+
+@Composable
+fun RegistroExitosoDialog(onClose: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onClose,
+        title = { Text("¡Registro exitoso!") },
+        text = { Text("¡Tu registro se ha completado exitosamente! ¿Deseas iniciar sesión ahora?") },
+        confirmButton = {
+            Button(
+                onClick = onClose,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = md_theme_light_secondary,
+                    contentColor = md_theme_light_onSecondary
+                )
+            ) {
+                Text("OK")
+            }
+        }
+    )
+}
 
 @Composable
 fun Encabezado(onBackPressed: () -> Unit) {
