@@ -28,8 +28,7 @@ import com.uleam.appparahelados.ui.registro.RegistroScreen
             }
             composable(route = RegistroDistinationScreen.route) {
                 RegistroScreen(
-                    navigatetoLogin = { navController.navigate(LoginDestinationScreen.route) },
-                )
+                    navigatetoLogin = { navController.navigate(LoginDestinationScreen.route) })
             }
     }
 }
