@@ -45,7 +45,7 @@ class RegisterViewModel(private val repository: UsuarioRepository) : ViewModel()
                     Log.i("APP HELADOS", "El correo electrónico ya está registrado.")
                     _navigateToLogin.postValue(true)
                 } else {
-                    insert(Usuario(nombre, correo, direccion, pass, telefono, "Usuario"))
+                    insert(Usuario(nombre, correo, pass, direccion, telefono, "Usuario"))
                     Log.i("APP HELADOS", "Registro exitoso")
                     _navigateTo.postValue(true)
                 }

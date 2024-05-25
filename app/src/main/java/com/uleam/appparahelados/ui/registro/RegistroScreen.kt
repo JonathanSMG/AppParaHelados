@@ -147,6 +147,7 @@ fun RegistroScreen(
             if (alertDialogVisibleState.value) {
                 RegistroExitosoDialog {
                     alertDialogVisibleState.value = false
+                    navigateToLogin()
                 }
             }
 
@@ -183,7 +184,7 @@ fun RegistroExitosoDialog(onClose: () -> Unit) {
         text = { Text("¡Tu registro se ha completado exitosamente! ¿Deseas iniciar sesión ahora?") },
         confirmButton = {
             Button(
-                onClick = onClose,
+                onClick = onClose ,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = md_theme_light_secondary,
                     contentColor = md_theme_light_onSecondary
@@ -198,13 +199,13 @@ fun RegistroExitosoDialog(onClose: () -> Unit) {
 @Composable
 fun Encabezado(onBackPressed: () -> Unit) {
     Surface(
-        color = Color.Red, // Fondo rojo para el encabezado
+        color = Color.Red,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 32.dp) // Padding superior para mover el encabezado hacia abajo
-            .height(200.dp) // Altura del encabezado
-            .padding(horizontal = 4.dp, vertical = 8.dp), // Padding del encabezado
-        shape = RoundedCornerShape(16.dp) // Redondear el borde del Surface del encabezado
+            .padding(top = 32.dp)
+            .height(200.dp)
+            .padding(horizontal = 4.dp, vertical = 8.dp),
+        shape = RoundedCornerShape(16.dp)
     ) {
         Column(
             modifier = Modifier.fillMaxSize()
@@ -224,14 +225,14 @@ fun Encabezado(onBackPressed: () -> Unit) {
                     )
                 }
             }
-            Spacer(modifier = Modifier.height(8.dp)) // Espacio entre el botón y el texto
+            Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = "CREA TU CUENTA",
-                color = Color.White, // Color de texto blanco para el encabezado
-                fontSize = 50.sp, // Tamaño de fuente del encabezado
+                color = Color.White,
+                fontSize = 50.sp,
                 fontWeight = FontWeight.Bold,
-                lineHeight = 48.sp, // Interlineado del encabezado
-                modifier = Modifier.padding(start = 16.dp) // Ajuste de espacio
+                lineHeight = 48.sp,
+                modifier = Modifier.padding(start = 16.dp)
             )
         }
     }

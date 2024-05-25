@@ -16,6 +16,7 @@
 
 package com.uleam.appparahelados.ui
 
+import PrincipalViewModel
 import android.app.Application
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory
 import androidx.lifecycle.createSavedStateHandle
@@ -34,6 +35,9 @@ object AppViewModelProvider {
         }
         initializer {
                  LoginViewModel(heladeriaApplication().container.usuarioRepository)
+        }
+        initializer {
+            PrincipalViewModel()
         }
     }
 }
