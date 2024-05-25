@@ -4,6 +4,11 @@
     <string name="registros_title">Registros</string>
     <string name="registro_Edit">Editar</string>
 
+    <string name="login_title">Login</string>
+    <string name="regresar">Regresar</string>
+
+
+
     <string name="registro_exitoso">Registro exitoso</string>
     <string name="registrarse">Crea una cuenta</string>
 

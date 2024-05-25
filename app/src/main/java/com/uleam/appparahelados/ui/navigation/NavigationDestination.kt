@@ -1,5 +1,3 @@
-package com.uleam.appparahelados.ui.navigation
-
 /*
  * Copyright (C) 2023 The Android Open Source Project
  *
@@ -16,19 +14,19 @@ package com.uleam.appparahelados.ui.navigation
  * limitations under the License.
  */
 
-import androidx.annotation.StringRes
-import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
+package com.uleam.appparahelados.ui.navigation
 
-interface NavigationDestination {
+/**
+ * Interface to describe the navigation destinations for the app
+ */
+interface NavigationController {
+    /**
+     * Unique name to define the path for a composable
+     */
     val route: String
-    @get:StringRes
+
+    /**
+     * String resource id to that contains title to be displayed for the screen.
+     */
     val titleRes: Int
-
-    @Composable
-    fun Content(navController: NavController)
-}
-
-fun NavController.navigate(destination: NavigationDestination) {
-    navigate(destination.route)
 }

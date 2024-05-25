@@ -1,7 +1,16 @@
 package com.uleam.appparahelados.ui.registro
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -14,10 +23,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -30,34 +37,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import com.uleam.appparahelados.R
 import com.uleam.appparahelados.ui.AppViewModelProvider
-import com.uleam.appparahelados.ui.navigation.NavigationDestination
-import com.uleam.appparahelados.ui.theme.md_theme_light_error
-import com.uleam.appparahelados.ui.theme.md_theme_light_onPrimary
+import com.uleam.appparahelados.ui.navigation.NavigationController
 import com.uleam.appparahelados.ui.theme.md_theme_light_onSecondary
 import com.uleam.appparahelados.ui.theme.md_theme_light_onSurfaceVariant
-import com.uleam.appparahelados.ui.theme.md_theme_light_primary
 import com.uleam.appparahelados.ui.theme.md_theme_light_secondary
-import kotlinx.coroutines.delay
 
-object RegistroDistinationScreen : NavigationDestination {
+object RegistroDistinationScreen : NavigationController {
     override val route = "registro"
-    override val titleRes = R.string.app_name
-
-    @Composable
-    override fun Content(navController: NavController) {
-        TODO("Not yet implemented")
+    override val titleRes = R.string.registros_title
     }
-
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun RegistroScreen(
+        navigatetoLogin: () -> Unit,
         viewModel: RegisterViewModel = viewModel(factory = AppViewModelProvider.Factory)
     ) {
         var nombre by remember { mutableStateOf("") }
@@ -80,9 +77,7 @@ object RegistroDistinationScreen : NavigationDestination {
                     .fillMaxSize()
                     .padding(horizontal = 16.dp) // Añadir padding horizontal al Column
             ) {
-                Encabezado{
-                    alertDialogVisibleState.value = false
-                }
+                Encabezado{navigatetoLogin()}
 
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -159,7 +154,7 @@ object RegistroDistinationScreen : NavigationDestination {
             scrollState.animateScrollTo(scrollState.maxValue)
         }
       }
-    }
+
     @Composable
     fun RegistroExitosoDialog(onClose: () -> Unit
     ) {
@@ -213,7 +208,7 @@ fun Encabezado(onBackPressed: () -> Unit) {
             Text(
                 text = "CREA TU CUENTA",
                 color = Color.White, // Color de texto blanco para el encabezado
-                fontSize = 40.sp, // Tamaño de fuente del encabezado
+                fontSize = 50.sp, // Tamaño de fuente del encabezado
                 fontWeight = FontWeight.Bold,
                 lineHeight = 48.sp, // Interlineado del encabezado
                 modifier = Modifier.padding(start = 16.dp) // Ajuste de espacio

@@ -23,6 +23,7 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.uleam.appparahelados.HeladosApplication
+import com.uleam.appparahelados.ui.login.LoginViewModel
 import com.uleam.appparahelados.ui.registro.RegisterViewModel
 
 
@@ -30,6 +31,9 @@ object AppViewModelProvider {
     val Factory = viewModelFactory {
         initializer {
                 RegisterViewModel(heladeriaApplication().container.usuarioRepository)
+        }
+        initializer {
+                 LoginViewModel(heladeriaApplication().container.usuarioRepository)
         }
     }
 }
