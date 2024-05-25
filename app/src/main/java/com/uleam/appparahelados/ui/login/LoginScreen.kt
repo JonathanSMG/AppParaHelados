@@ -26,9 +26,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.uleam.appparahelados.R
@@ -37,6 +40,7 @@ import com.uleam.appparahelados.ui.navigation.NavigationController
 import com.uleam.appparahelados.ui.theme.md_theme_light_onSecondary
 import com.uleam.appparahelados.ui.theme.md_theme_light_onSurfaceVariant
 import com.uleam.appparahelados.ui.theme.md_theme_light_secondary
+import kotlinx.coroutines.launch
 
 object LoginDestinationScreen : NavigationController {
     override val route = "login"
@@ -51,8 +55,10 @@ fun LoginScreen(
 ) {
     var correo by remember { mutableStateOf("") }
     var pass by remember { mutableStateOf("") }
+    var passwordVisibility by remember { mutableStateOf(false) }
 
     val alertDialogVisibleState = remember { mutableStateOf(false) }
+    val showErrorDialog = remember { mutableStateOf(false) }
     val scrollState = rememberScrollState()
 
     Box(
@@ -74,6 +80,7 @@ fun LoginScreen(
                 .clip(RoundedCornerShape(16.dp))
                 .padding(vertical = 4.dp, horizontal = 16.dp)
 
+
             OutlinedTextField(
                 value = correo,
                 onValueChange = { correo = it },
@@ -87,16 +94,36 @@ fun LoginScreen(
                 onValueChange = { pass = it },
                 label = { Text(text = "Contraseña") },
                 modifier = textFieldModifier,
+                visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
+                trailingIcon = {
+                    val image = if (passwordVisibility)
+                        painterResource(id = R.drawable.visibility)
+                    else painterResource(id = R.drawable.visible)
+
+                    IconButton(onClick = {
+                        passwordVisibility = !passwordVisibility
+                    }) {
+                        Icon(painter = image, contentDescription = if (passwordVisibility) "Ocultar contraseña" else "Mostrar contraseña")
+                    }
+                },
                 colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = md_theme_light_onSurfaceVariant)
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
+
+            Spacer(modifier = Modifier.height(16.dp))
+
             Button(
                 onClick = {
-                    viewModel.login(correo, pass)
-                    navigateTohome()
-                    alertDialogVisibleState.value = true
+                    viewModel.viewModelScope.launch {
+                        val isValid = viewModel.validateUser(correo, pass)
+                        if (isValid) {
+                            alertDialogVisibleState.value = true
+                        } else {
+                            showErrorDialog.value = true
+                        }
+                    }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -130,17 +157,38 @@ fun LoginScreen(
                         .clickable { navigateToRegister() }
                 )
             }
-            if (alertDialogVisibleState.value) {
-                InicioSesionExitosoDialog {
-                    alertDialogVisibleState.value = false
-                }
+
+            if (showErrorDialog.value) {
+                AlertDialog(
+                    onDismissRequest = { showErrorDialog.value = false },
+                    title = { Text("Error") },
+                    text = { Text("Credenciales inválidas. Por favor, inténtalo de nuevo.") },
+                    confirmButton = {
+                        Button(
+                            onClick = { showErrorDialog.value = false },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = md_theme_light_secondary,
+                                contentColor = md_theme_light_onSecondary
+                            )
+                        ) {
+                            Text("OK")
+                        }
+                    }
+                )
             }
+        }
+    }
+    if (alertDialogVisibleState.value) {
+        InicioSesionExitosoDialog {
+            alertDialogVisibleState.value = false
+            navigateTohome()
         }
     }
     LaunchedEffect(Unit) {
         scrollState.animateScrollTo(scrollState.maxValue)
     }
 }
+
 
 @Composable
 fun InicioSesionExitosoDialog(onClose: () -> Unit) {

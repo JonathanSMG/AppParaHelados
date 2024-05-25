@@ -1,42 +1,21 @@
 package com.uleam.appparahelados.ui.registro
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.*
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -51,10 +30,11 @@ object RegistroDistinationScreen : NavigationController {
     override val route = "registro"
     override val titleRes = R.string.registros_title
 }
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegistroScreen(
-    navigatetoLogin: () -> Unit,
+    navigateToLogin: () -> Unit,
     viewModel: RegisterViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     var nombre by remember { mutableStateOf("") }
@@ -62,8 +42,11 @@ fun RegistroScreen(
     var direccion by remember { mutableStateOf("") }
     var pass by remember { mutableStateOf("") }
     var telefono by remember { mutableStateOf("") }
+    var passwordVisibility by remember { mutableStateOf(false) }
 
     val alertDialogVisibleState = remember { mutableStateOf(false) }
+    val showErrorDialog = remember { mutableStateOf(false) }
+    val errorMessage = remember { mutableStateOf("") }
     val scrollState = rememberScrollState()
 
     Box(
@@ -75,9 +58,9 @@ fun RegistroScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 16.dp) // Añadir padding horizontal al Column
+                .padding(horizontal = 16.dp)
         ) {
-            Encabezado{navigatetoLogin()}
+            Encabezado { navigateToLogin() }
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -112,13 +95,6 @@ fun RegistroScreen(
                 colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = md_theme_light_onSurfaceVariant)
             )
             OutlinedTextField(
-                value = pass,
-                onValueChange = { pass = it },
-                label = { Text(text = "Contraseña") },
-                modifier = textFieldModifier,
-                colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = md_theme_light_onSurfaceVariant)
-            )
-            OutlinedTextField(
                 value = telefono,
                 onValueChange = { telefono = it },
                 label = { Text(text = "Teléfono") },
@@ -126,12 +102,37 @@ fun RegistroScreen(
                 colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = md_theme_light_onSurfaceVariant)
             )
 
+            OutlinedTextField(
+                value = pass,
+                onValueChange = { pass = it },
+                label = { Text(text = "Contraseña") },
+                modifier = textFieldModifier,
+                visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
+                trailingIcon = {
+                    val image = if (passwordVisibility)
+                        painterResource(id = R.drawable.visibility)
+                    else painterResource(id = R.drawable.visible)
+
+                    IconButton(onClick = {
+                        passwordVisibility = !passwordVisibility
+                    }) {
+                        Icon(painter = image, contentDescription = if (passwordVisibility) "Ocultar contraseña" else "Mostrar contraseña")
+                    }
+                },
+                colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = md_theme_light_onSurfaceVariant),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+            )
             Spacer(modifier = Modifier.height(16.dp))
 
             Button(
                 onClick = {
-                    viewModel.onSubmitButtonClick(nombre, correo, direccion, pass, telefono)
-                    alertDialogVisibleState.value = true
+                    if (nombre.isEmpty() || correo.isEmpty() || direccion.isEmpty() || pass.isEmpty() || telefono.isEmpty()) {
+                        errorMessage.value = "Todos los campos son obligatorios."
+                        showErrorDialog.value = true
+                    } else {
+                        viewModel.onSubmitButtonClick(nombre, correo, direccion, pass, telefono)
+                        alertDialogVisibleState.value = true
+                    }
                 },
                 modifier = buttonModifier,
                 colors = ButtonDefaults.buttonColors(
@@ -148,6 +149,25 @@ fun RegistroScreen(
                     alertDialogVisibleState.value = false
                 }
             }
+
+            if (showErrorDialog.value) {
+                AlertDialog(
+                    onDismissRequest = { showErrorDialog.value = false },
+                    title = { Text("Error") },
+                    text = { Text(errorMessage.value) },
+                    confirmButton = {
+                        Button(
+                            onClick = { showErrorDialog.value = false },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = md_theme_light_secondary,
+                                contentColor = md_theme_light_onSecondary
+                            )
+                        ) {
+                            Text("OK")
+                        }
+                    }
+                )
+            }
         }
     }
     LaunchedEffect(Unit) {
@@ -156,8 +176,7 @@ fun RegistroScreen(
 }
 
 @Composable
-fun RegistroExitosoDialog(onClose: () -> Unit
-) {
+fun RegistroExitosoDialog(onClose: () -> Unit) {
     AlertDialog(
         onDismissRequest = onClose,
         title = { Text("¡Registro exitoso!") },
@@ -182,6 +201,7 @@ fun Encabezado(onBackPressed: () -> Unit) {
         color = Color.Red, // Fondo rojo para el encabezado
         modifier = Modifier
             .fillMaxWidth()
+            .padding(top = 32.dp) // Padding superior para mover el encabezado hacia abajo
             .height(200.dp) // Altura del encabezado
             .padding(horizontal = 4.dp, vertical = 8.dp), // Padding del encabezado
         shape = RoundedCornerShape(16.dp) // Redondear el borde del Surface del encabezado
@@ -215,4 +235,5 @@ fun Encabezado(onBackPressed: () -> Unit) {
             )
         }
     }
+
 }

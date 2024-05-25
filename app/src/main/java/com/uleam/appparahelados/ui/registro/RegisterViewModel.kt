@@ -38,16 +38,16 @@ class RegisterViewModel(private val repository: UsuarioRepository) : ViewModel()
         pass: String,
         telefono: String
     ) {
-        if (validateFields(nombre, correo, direccion, pass, telefono)) {
+        if (validateFields(nombre, correo, pass, direccion, telefono)) {
             CoroutineScope(viewModelScope.coroutineContext).launch {
                 val usuarioExistente = repository.getUsuarioByUsername(correo)
                 if (usuarioExistente != null) {
                     Log.i("APP HELADOS", "El correo electrónico ya está registrado.")
-                    _navigateToLogin.postValue(true) // Indicar que se debe navegar a la pantalla de login
+                    _navigateToLogin.postValue(true)
                 } else {
-                    insert(Usuario(nombre, correo, direccion, pass, telefono, "Administrador"))
+                    insert(Usuario(nombre, correo, direccion, pass, telefono, "Usuario"))
                     Log.i("APP HELADOS", "Registro exitoso")
-                    _navigateTo.postValue(true) // Indicar que el registro fue exitoso
+                    _navigateTo.postValue(true)
                 }
             }
         }
@@ -87,7 +87,7 @@ class RegisterViewModel(private val repository: UsuarioRepository) : ViewModel()
     fun onSubmitButtonClick(nombre: String, correo: String, direccion: String, pass: String, telefono: String) {
         if (validateFields(nombre, correo, direccion, pass, telefono)) {
             submitButton(nombre, correo, direccion, pass, telefono)
-            snackbarMessage.value = "Registro exitoso" // O el mensaje que desees mostrar
+            snackbarMessage.value = "Registro exitoso"
         }
     }
     private fun insert(user: Usuario) {

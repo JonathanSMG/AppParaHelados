@@ -15,6 +15,8 @@ class OfflineUsuariosRepository(private val usuarioDao: UsuarioDao) : UsuarioRep
 
     override suspend fun updateUsuario(usuario: Usuario) = usuarioDao.update(usuario)
     override suspend fun getUsuarioByUsername(correo: String): Usuario? = usuarioDao.getUsuarioByUsername(correo)
+
+    override suspend fun getUserByEmailAndPassword(email: String, password: String): Usuario? = usuarioDao.getUserByEmailAndPassword(email, password)
     override suspend fun areCredentialsValid(correo: String, password: String): Boolean {
         val user = usuarioDao.getUsuarioByUsername(correo)
         return user != null && user.pass == password

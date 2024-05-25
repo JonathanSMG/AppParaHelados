@@ -12,5 +12,6 @@ interface UsuarioRepository {
     suspend fun updateUsuario(usuario: Usuario)
     suspend fun getUsuarioByUsername(correo: String): Usuario?
     suspend fun areCredentialsValid(correo: String, password: String): Boolean
+    suspend fun getUserByEmailAndPassword(email: String, password: String): Usuario?
 
 }

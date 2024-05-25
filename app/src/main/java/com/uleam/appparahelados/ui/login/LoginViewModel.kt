@@ -17,27 +17,36 @@ class LoginViewModel(private val repository: UsuarioRepository) : ViewModel() {
     val showErrorToast: LiveData<Boolean>
         get() = _showErrorToast
 
-    fun login(correo: String, password: String) {
-        viewModelScope.launch {
-            val isValidCredentials = repository.areCredentialsValid(correo, password)
+    fun login(correo: String?, password: String?) {
+        if (correo.isNullOrEmpty() || password.isNullOrEmpty()) {
+            _showErrorToast.value = true
+            return
+        }
 
-            if (isValidCredentials) {
-                // Autenticación exitosa, establecer el valor de navegación a true
-                _navigateToHome.value = true
-            } else {
-                // Credenciales incorrectas, establecer el valor de showErrorToast a true
+        viewModelScope.launch {
+            try {
+                val isValidCredentials = repository.areCredentialsValid(correo, password)
+
+                if (isValidCredentials) {
+                    _navigateToHome.value = true
+                } else {
+                    _showErrorToast.value = true
+                }
+            } catch (e: Exception) {
                 _showErrorToast.value = true
             }
         }
     }
+    suspend fun validateUser(email: String, password: String): Boolean {
+        val user = repository.getUserByEmailAndPassword(email, password)
+        return user != null
+    }
 
-    // Método para indicar que la navegación a la pantalla principal ha finalizado
-    fun doneNavigatingToHome() {
+    fun resetNavigation() {
         _navigateToHome.value = false
     }
 
-    // Método para indicar que la visualización del mensaje de error ha finalizado
-    fun doneShowingError() {
+    fun resetError() {
         _showErrorToast.value = false
     }
 }
