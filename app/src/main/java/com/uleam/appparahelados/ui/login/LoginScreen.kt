@@ -183,7 +183,7 @@ fun Encabezado() {
 
         Image(
             painter = painterResource(id = R.drawable.portada),
-            contentDescription = "Logo de Heladería Sammy",
+            contentDescription = "Logo de Heladería Sammy jj",
             modifier = Modifier
                 .size(200.dp)
         )
