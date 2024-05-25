@@ -7,11 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.prueba.HeladosApp
-import com.uleam.appparahelados.ui.navigation.NavigationController
 import com.uleam.appparahelados.ui.theme.HeladossTheme
 
 class MainActivity : ComponentActivity() {

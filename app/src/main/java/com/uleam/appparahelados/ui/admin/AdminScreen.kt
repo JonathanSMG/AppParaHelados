@@ -1,11 +1,17 @@
 package com.uleam.appparahelados.ui.admin
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -53,44 +59,93 @@ fun Encabezado() {
 
 @Composable
 fun MainContent(modifier: Modifier = Modifier) {
-    Row(
+    var menuVisible by remember { mutableStateOf(false) }
+
+    Column(
         modifier = modifier
             .fillMaxSize()
             .padding(16.dp),
-        verticalAlignment = Alignment.Top,
-        horizontalArrangement = Arrangement.End
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column(
-            modifier = Modifier.fillMaxHeight(),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.End
+        Encabezado()
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Box(
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.Center
         ) {
-            Encabezado()
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Button(
-                onClick = { },
-                modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Red,
-                    contentColor = md_theme_light_onSecondary
-                )
-            ) {
-                Text("Sabores")
+            if (!menuVisible) {
+                Button(
+                    onClick = { menuVisible = true },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Red,
+                        contentColor = md_theme_light_onSecondary
+                    )
+                ) {
+                    Text("Abrir menú")
+                }
+            } else {
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Button(
+                        onClick = { menuVisible = false },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color.Red,
+                            contentColor = md_theme_light_onSecondary
+                        )
+                    ) {
+                        Text("Cerrar menú")
+                    }
+                }
             }
+        }
 
-            Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
-            Button(
-                onClick = { },
-                modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Red,
-                    contentColor = md_theme_light_onSecondary
-                )
-            ) {
-                Text("Toppings")
-            }
+        if (menuVisible) {
+            MenuContent(
+                onCloseMenu = { menuVisible = false },
+                modifier = Modifier.fillMaxWidth().height(IntrinsicSize.Max)
+            )
+        }
+    }
+}
+
+@Composable
+fun MenuContent(onCloseMenu: () -> Unit, modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.End
+    ) {
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(
+            onClick = { /* Handle Sabores click */ },
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Red,
+                contentColor = md_theme_light_onSecondary
+            )
+        ) {
+            Text("Sabores")
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(
+            onClick = { /* Handle Toppins click */ },
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Red,
+                contentColor = md_theme_light_onSecondary
+            )
+        ) {
+            Text("Toppins")
         }
     }
 }

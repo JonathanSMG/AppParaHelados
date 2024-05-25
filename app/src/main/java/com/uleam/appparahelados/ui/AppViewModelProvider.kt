@@ -25,12 +25,28 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.uleam.appparahelados.HeladosApplication
 import com.uleam.appparahelados.ui.admin.AdminViewModel
+import com.uleam.appparahelados.ui.admin.topping.ToppingDetailsViewModel
+import com.uleam.appparahelados.ui.admin.topping.ToppingEditViewModel
+import com.uleam.appparahelados.ui.admin.topping.ToppingEntryViewModel
 import com.uleam.appparahelados.ui.login.LoginViewModel
 import com.uleam.appparahelados.ui.registro.RegisterViewModel
 
 
 object AppViewModelProvider {
     val Factory = viewModelFactory {
+        initializer {
+            ToppingEditViewModel(
+                this.createSavedStateHandle()
+            )
+        }
+        initializer {
+            ToppingEntryViewModel(heladeriaApplication().container.toppingRepository)
+        }
+        initializer {
+            ToppingDetailsViewModel(
+                this.createSavedStateHandle()
+            )
+        }
         initializer {
                 RegisterViewModel(heladeriaApplication().container.usuarioRepository)
         }
@@ -46,9 +62,5 @@ object AppViewModelProvider {
     }
 }
 
-/**
- * Extension function to queries for [Application] object and returns an instance of
- * [InventoryApplication].
- */
 fun CreationExtras.heladeriaApplication(): HeladosApplication =
     (this[AndroidViewModelFactory.APPLICATION_KEY] as HeladosApplication)

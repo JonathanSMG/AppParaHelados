@@ -15,4 +15,32 @@
 
     <string name="principal_title">Heladeria Sammy</string>
 
+    <string name="topping_detail_title">Topping</string>
+
+    <string name="edit_topping_title">Editor heladeria</string>
+
+    <string name="topping_entry_title">Topping heladeria</string>
+
+    <string name="topping_name_req">Nombre</string>
+
+    <string name="topping_price_req">Price</string>
+
+
+    <string name="vender">Vender</string>
+    <string name="eliminar">Eliminar</string>
+
+
+    <string name="topping_nombre">Nombre</string>
+    <string name="topping_precio">Precio</string>
+
+    <string name="no">No</string>
+    <string name="yes">Si</string>
+
+    <string name="delete_question">Deseas borrar?</string>
+
+    <string name="attention">Atencion</string>
+
+    <string name="save_action">Guardar</string>
+    <string name="required_fields">Necesitas llenar todos los datos</string>
+
 </resources>
