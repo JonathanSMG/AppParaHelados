@@ -14,6 +14,7 @@ import com.uleam.appparahelados.ui.principal.PrincipalScreen
 import com.uleam.appparahelados.ui.registro.RegistroDistinationScreen
 import com.uleam.appparahelados.ui.registro.RegistroScreen
 import com.uleam.appparahelados.ui.splash.SplashScreen
+import com.uleam.appparahelados.ui.Clasico.ClasicoScreen
 
 @Composable
 fun NavigationController(
@@ -43,6 +44,9 @@ fun NavigationController(
         }
         composable(route = AdminDestionation.route) {
             AdminScreen()
+        }
+        composable(route = "clasico") {
+            ClasicoScreen(navController = navController)
         }
     }
 }
