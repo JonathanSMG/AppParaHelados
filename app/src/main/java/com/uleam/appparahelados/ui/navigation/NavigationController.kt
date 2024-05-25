@@ -5,6 +5,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.uleam.appparahelados.ui.admin.AdminDestionation
+import com.uleam.appparahelados.ui.admin.AdminScreen
 import com.uleam.appparahelados.ui.login.LoginDestinationScreen
 import com.uleam.appparahelados.ui.login.LoginScreen
 import com.uleam.appparahelados.ui.principal.PrincipalDestionation
@@ -29,8 +31,8 @@ fun NavigationController(
         composable(route = LoginDestinationScreen.route) {
             LoginScreen(
                 navigateTohome = { navController.navigate(PrincipalDestionation.route) },
-                navigateToRegister = { navController.navigate(RegistroDistinationScreen.route) }
-            )
+                navigateToRegister = { navController.navigate(RegistroDistinationScreen.route) } ,
+                navigateToAdmin = {navController.navigate(AdminDestionation.route )})
         }
         composable(route = RegistroDistinationScreen.route) {
             RegistroScreen(
@@ -38,6 +40,9 @@ fun NavigationController(
         }
         composable(route = PrincipalDestionation.route) {
             PrincipalScreen()
+        }
+        composable(route = AdminDestionation.route) {
+            AdminScreen()
         }
     }
 }

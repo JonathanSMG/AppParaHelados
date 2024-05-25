@@ -11,6 +11,8 @@ import com.uleam.appparahelados.data.HeladoPersonalizado.HeladoPersonalizado
 import com.uleam.appparahelados.data.HeladoPersonalizado.interfaces.HeladoPersonalizadoDao
 import com.uleam.appparahelados.data.HeladoTopping.HeladoTopping
 import com.uleam.appparahelados.data.HeladoTopping.interfaces.HeladoToppingDao
+import com.uleam.appparahelados.data.Pedido.Pedido
+import com.uleam.appparahelados.data.Pedido.interfaces.PedidoDao
 import com.uleam.appparahelados.data.Topping.Topping
 import com.uleam.appparahelados.data.Topping.interfaces.ToppingDao
 import com.uleam.appparahelados.data.Usuario.Usuario
@@ -25,7 +27,8 @@ import com.uleam.appparahelados.data.Usuario.interfaces.UsuarioDao
         Helado::class,
         Topping::class,
         HeladoPersonalizado::class,
-        HeladoTopping::class
+        HeladoTopping::class ,
+        Pedido::class
     ],
     version = 1,
     exportSchema = false
@@ -37,6 +40,7 @@ abstract class HeladoDatabase : RoomDatabase() {
     abstract fun toppingDao(): ToppingDao
     abstract fun heladoPersonalizadoDao(): HeladoPersonalizadoDao
     abstract fun heladoToppingDao(): HeladoToppingDao
+    abstract fun pedidoDao(): PedidoDao
 
     companion object {
         @Volatile

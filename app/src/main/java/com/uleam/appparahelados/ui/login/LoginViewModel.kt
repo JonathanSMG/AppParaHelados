@@ -37,10 +37,19 @@ class LoginViewModel(private val repository: UsuarioRepository) : ViewModel() {
             }
         }
     }
-    suspend fun validateUser(email: String, password: String): Boolean {
+    suspend fun validateUser(email: String, password: String): String? {
         val user = repository.getUserByEmailAndPassword(email, password)
-        return user != null
+        val usuarioExistente = repository.getUsuarioByUsername(email)
+
+        if (user != null && usuarioExistente != null) {
+            return when (usuarioExistente.rol) {
+                "Admin", "Usuario" -> usuarioExistente.rol
+                else -> null
+            }
+        }
+        return null
     }
+
 
     fun resetNavigation() {
         _navigateToHome.value = false

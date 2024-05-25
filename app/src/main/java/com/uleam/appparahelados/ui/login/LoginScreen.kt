@@ -51,6 +51,7 @@ object LoginDestinationScreen : NavigationController {
 fun LoginScreen(
     navigateTohome: () -> Unit,
     navigateToRegister: () -> Unit,
+    navigateToAdmin: () -> Unit,
     viewModel: LoginViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     var correo by remember { mutableStateOf("") }
@@ -60,6 +61,7 @@ fun LoginScreen(
     val alertDialogVisibleState = remember { mutableStateOf(false) }
     val showErrorDialog = remember { mutableStateOf(false) }
     val scrollState = rememberScrollState()
+    val dialogRole = remember { mutableStateOf<String?>(null) }
 
     Box(
         modifier = Modifier
@@ -117,8 +119,9 @@ fun LoginScreen(
             Button(
                 onClick = {
                     viewModel.viewModelScope.launch {
-                        val isValid = viewModel.validateUser(correo, pass)
-                        if (isValid) {
+                        val role = viewModel.validateUser(correo, pass)
+                        if (role != null) {
+                            dialogRole.value = role
                             alertDialogVisibleState.value = true
                         } else {
                             showErrorDialog.value = true
@@ -179,10 +182,16 @@ fun LoginScreen(
         }
     }
     if (alertDialogVisibleState.value) {
-        InicioSesionExitosoDialog {
-            alertDialogVisibleState.value = false
-            navigateTohome()
-        }
+        InicioSesionExitosoDialog(
+            onClose = {
+                alertDialogVisibleState.value = false
+                when (dialogRole.value) {
+                    "Admin" -> navigateToAdmin()
+                    "Usuario" -> navigateTohome()
+                }
+            },
+            role = dialogRole.value
+        )
     }
     LaunchedEffect(Unit) {
         scrollState.animateScrollTo(scrollState.maxValue)
@@ -191,11 +200,11 @@ fun LoginScreen(
 
 
 @Composable
-fun InicioSesionExitosoDialog(onClose: () -> Unit) {
+fun InicioSesionExitosoDialog(onClose: () -> Unit, role: String?) {
     AlertDialog(
         onDismissRequest = onClose,
         title = { Text("¡Inicio de Sesión Exitoso!") },
-        text = { Text("¡Has iniciado sesión exitosamente! ¿Deseas continuar?") },
+        text = { Text("¡Has iniciado sesión exitosamente como $role! ¿Deseas continuar?") },
         confirmButton = {
             Button(
                 onClick = onClose,
@@ -209,7 +218,6 @@ fun InicioSesionExitosoDialog(onClose: () -> Unit) {
         }
     )
 }
-
 @Composable
 fun Encabezado() {
     Column(

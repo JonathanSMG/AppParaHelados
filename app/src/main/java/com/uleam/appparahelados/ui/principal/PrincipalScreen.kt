@@ -67,11 +67,11 @@ fun PrincipalScreen(viewModel: PrincipalViewModel = viewModel(factory = AppViewM
 @Composable
 fun Encabezado() {
     Column(
-        modifier = Modifier.fillMaxWidth(),  // Cambiar fillMaxSize a fillMaxWidth
+        modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(100.dp)) // Espacio adicional arriba del texto
+        Spacer(modifier = Modifier.height(100.dp))
         Text(
             text = "Heladería Sammy",
             color = Color.Black,
@@ -98,7 +98,7 @@ fun MainContent(modifier: Modifier = Modifier) {
         modifier = modifier
             .fillMaxSize()
             .padding(16.dp),
-        verticalArrangement = Arrangement.Top,  // Cambiar Center a Top
+        verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Encabezado()

@@ -129,6 +129,9 @@ fun RegistroScreen(
                     if (nombre.isEmpty() || correo.isEmpty() || direccion.isEmpty() || pass.isEmpty() || telefono.isEmpty()) {
                         errorMessage.value = "Todos los campos son obligatorios."
                         showErrorDialog.value = true
+                    } else if (pass.length < 6) {
+                        errorMessage.value = "La contraseña tiene que tener almenos mas de 6 caracteres."
+                        showErrorDialog.value = true
                     } else {
                         viewModel.onSubmitButtonClick(nombre, correo, direccion, pass, telefono)
                         alertDialogVisibleState.value = true

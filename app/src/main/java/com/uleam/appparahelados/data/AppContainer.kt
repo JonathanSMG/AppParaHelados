@@ -27,6 +27,8 @@ import com.uleam.appparahelados.data.HeladoPersonalizado.interfaces.HeladoPerson
 import com.uleam.appparahelados.data.HeladoTopping.OfflineHeladoToppingsRepository
 import com.uleam.appparahelados.data.HeladoTopping.interfaces.HeladoToppingDao
 import com.uleam.appparahelados.data.HeladoTopping.interfaces.HeladoToppingRepository
+import com.uleam.appparahelados.data.Pedido.OfflinePedidoRepository
+import com.uleam.appparahelados.data.Pedido.interfaces.PedidoRepository
 import com.uleam.appparahelados.data.Topping.OfflineToppingsRepository
 import com.uleam.appparahelados.data.Topping.interfaces.ToppingDao
 import com.uleam.appparahelados.data.Topping.interfaces.ToppingRepository
@@ -43,6 +45,8 @@ interface AppContainer {
     val toppingRepository: ToppingRepository
     val heladoPersonalizadoRepository: HeladoPersonalizadoRepository
     val heladoToppingRepository: HeladoToppingRepository
+    val pedido: PedidoRepository
+
 }
 
 /**
@@ -82,5 +86,9 @@ class AppDataContainer(private val context: Context) : AppContainer {
      */
     override val heladoToppingRepository: HeladoToppingRepository by lazy {
         OfflineHeladoToppingsRepository(HeladoDatabase.getDatabase(context).heladoToppingDao())
+    }
+
+    override val pedido: PedidoRepository by lazy {
+        OfflinePedidoRepository(HeladoDatabase.getDatabase(context).pedidoDao())
     }
 }

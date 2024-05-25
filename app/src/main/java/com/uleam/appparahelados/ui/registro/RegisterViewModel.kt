@@ -9,7 +9,6 @@ import kotlinx.coroutines.*
 
 class RegisterViewModel(private val repository: UsuarioRepository) : ViewModel() {
 
-    // Nueva LiveData para navegar a la pantalla de inicio de sesión
     private val _navigateToLogin = MutableLiveData<Boolean>()
     val navigateToLogin: LiveData<Boolean>
         get() = _navigateToLogin
@@ -45,7 +44,7 @@ class RegisterViewModel(private val repository: UsuarioRepository) : ViewModel()
                     Log.i("APP HELADOS", "El correo electrónico ya está registrado.")
                     _navigateToLogin.postValue(true)
                 } else {
-                    insert(Usuario(nombre, correo, pass, direccion, telefono, "Usuario"))
+                    insert(Usuario(nombre, correo, pass, direccion, telefono, "Admin"))
                     Log.i("APP HELADOS", "Registro exitoso")
                     _navigateTo.postValue(true)
                 }
