@@ -14,6 +14,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.uleam.appparahelados.R
 import com.uleam.appparahelados.ui.AppViewModelProvider
 import com.uleam.appparahelados.ui.navigation.NavigationController
@@ -25,7 +26,9 @@ object PrincipalDestionation : NavigationController {
 }
 
 @Composable
-fun PrincipalScreen(viewModel: PrincipalViewModel = viewModel(factory = AppViewModelProvider.Factory)
+fun PrincipalScreen(
+    navController: NavHostController,
+    viewModel: PrincipalViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val comentario = viewModel.generateRandomComment()
     Scaffold(
@@ -58,11 +61,10 @@ fun PrincipalScreen(viewModel: PrincipalViewModel = viewModel(factory = AppViewM
             }
         },
         content = { paddingValues ->
-            MainContent(modifier = Modifier.padding(paddingValues))
+            MainContent(modifier = Modifier.padding(paddingValues), navController = navController)
         }
     )
 }
-
 
 @Composable
 fun Encabezado() {
@@ -93,7 +95,7 @@ fun Encabezado() {
 }
 
 @Composable
-fun MainContent(modifier: Modifier = Modifier) {
+fun MainContent(modifier: Modifier = Modifier, navController: NavHostController) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -105,7 +107,7 @@ fun MainContent(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = { },
+            onClick = { navController.navigate("clasico") },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Red,
@@ -119,7 +121,7 @@ fun MainContent(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = {  },
+            onClick = { },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Red,

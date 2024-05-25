@@ -18,10 +18,12 @@ class ClasicoViewModel : ViewModel() {
         // Simulación de datos, en una app real obtendría los datos de un repositorio o base de datos
         viewModelScope.launch {
             _helados.value = listOf(
-                Helado(1, "Chocolate", "Delicioso helado de chocolate", "Delicioso helado de chocolate", 1.5),
+                Helado(1, "Chocolate", "Delicioso helado de chocolate", "Delicioso helado de chocolate", 2.5),
                 Helado(2, "Fresa", "Refrescante helado de fresa", "Delicioso helado de fresa", 2.2),
-                Helado(3, "Vainilla", "Clásico helado de vainilla", "Delicioso helado de vainilla",1.2),
-                Helado(4, "Menta", "Fresco helado de menta", "Delicioso helado de mente",1.4)
+                Helado(3, "Vainilla", "Clásico helado de vainilla", "Delicioso helado de vainilla",2.0),
+                Helado(4, "Menta", "Fresco helado de menta", "Delicioso helado de mente",2.0),
+                Helado(5, "Coco", "cocoloco", "Delicioso sabor a coco", 2.5),
+                Helado(6, "Oreo", "cocoloco", "De las galletas al helado", 3.0)
             )
         }
 

@@ -40,7 +40,7 @@ fun NavigationController(
                 navigateToLogin = { navController.navigate(LoginDestinationScreen.route) })
         }
         composable(route = PrincipalDestionation.route) {
-            PrincipalScreen()
+            PrincipalScreen(navController = navController) // Pasar navController aquí
         }
         composable(route = AdminDestionation.route) {
             AdminScreen()
