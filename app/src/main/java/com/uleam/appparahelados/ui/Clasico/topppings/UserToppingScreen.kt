@@ -7,6 +7,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ThumbDown
 import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -15,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -112,11 +114,23 @@ fun UserToppingScreen(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Button(onClick = { navController.navigate("principal") }) {
+            Button(onClick = { navController.navigate("principal") },
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
+                modifier = Modifier.weight(1f).padding(start = 8.dp),
+                contentPadding = PaddingValues(16.dp)
+
+            ) {
                 Text("Regresar al inicio")
+
             }
-            Button(onClick = { navController.navigate("helado_clasico") }) {
+            Button(onClick = { navController.navigate("helado_clasico") },
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
+                modifier = Modifier.weight(1f).padding(start = 8.dp),
+                contentPadding = PaddingValues(16.dp)
+
+                ) {
                 Text("Regresar a helados")
+
             }
         }
     }

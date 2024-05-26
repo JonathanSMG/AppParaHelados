@@ -58,12 +58,12 @@ fun SplashScreen(navController: NavController) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(bottom = 16.dp),
+                .padding(bottom = 80.dp),
             contentAlignment = Alignment.BottomCenter
         ) {
             Text(
                 text = "by jony y fabricio",
-                color = Color.Blue,
+                color = Color.Black,
                 fontSize = 25.sp
             )
         }

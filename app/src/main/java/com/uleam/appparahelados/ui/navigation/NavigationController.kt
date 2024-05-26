@@ -1,5 +1,6 @@
 package com.uleam.appparahelados.ui.navigation
 
+import ClasicoScreen
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -18,8 +19,7 @@ import com.uleam.appparahelados.ui.principal.PrincipalScreen
 import com.uleam.appparahelados.ui.registro.RegistroDistinationScreen
 import com.uleam.appparahelados.ui.registro.RegistroScreen
 import com.uleam.appparahelados.ui.splash.SplashScreen
-import com.uleam.appparahelados.ui.Clasico.ClasicoScreen
-import com.uleam.appparahelados.ui.Clasico.HeladoClasicoDestionation
+
 import com.uleam.appparahelados.ui.Clasico.toppings.UserToppingDestionation
 import com.uleam.appparahelados.ui.Clasico.toppings.UserToppingScreen
 import com.uleam.appparahelados.ui.admin.helado.HeladoDestination
