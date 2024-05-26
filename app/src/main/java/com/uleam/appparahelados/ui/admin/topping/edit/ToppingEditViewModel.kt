@@ -24,11 +24,11 @@ class ToppingEditViewModel(
     var toppingUiState by mutableStateOf(ToppingUiState())
         private set
 
-    private val itemId: Int = checkNotNull(savedStateHandle[ToppingEditDestination.toppingIdArg])
+    private val toppingId: Int = checkNotNull(savedStateHandle[ToppingEditDestination.toppingIdArg])
 
     init {
         viewModelScope.launch {
-            toppingUiState = toppingRepository.getToppingStream(itemId)
+            toppingUiState = toppingRepository.getToppingStream(toppingId)
                 .filterNotNull()
                 .first()
                 .toToppingUiState(true)

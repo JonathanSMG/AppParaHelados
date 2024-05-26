@@ -3,6 +3,8 @@ package com.uleam.appparahelados.ui.principal
 import PrincipalViewModel
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -14,7 +16,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavHostController
 import com.uleam.appparahelados.R
 import com.uleam.appparahelados.ui.AppViewModelProvider
 import com.uleam.appparahelados.ui.navigation.NavigationController
@@ -23,48 +24,59 @@ import com.uleam.appparahelados.ui.theme.md_theme_light_onSecondary
 object PrincipalDestionation : NavigationController {
     override val route = "principal"
     override val titleRes = R.string.registros_title
+    const val IdArg = "UserId"
+    val routeWithArgs = "${PrincipalDestionation.route}/{$IdArg}"
 }
 
 @Composable
 fun PrincipalScreen(
-    navController: NavHostController,
+    navigateToHelados: () -> Unit,
+    navigateToCloseSession: () -> Unit,
     viewModel: PrincipalViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-    val comentario = viewModel.generateRandomComment()
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
             BottomAppBar(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                containerColor = MaterialTheme.colorScheme.secondaryContainer
             ) {
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
+                        IconButton(
+                            onClick = navigateToCloseSession
+                        ) {
+                            Icon(
+                                Icons.Filled.Logout,
+                                contentDescription = "Cerrar Sesión",
+                                tint = Color.Black
+                            )
+                        }
+
                         Text(
-                            text = "Comentarios",
-                            modifier = Modifier.padding(start = 16.dp, top = 8.dp, end = 16.dp),
-                            style = MaterialTheme.typography.bodyMedium
-                        )
-                        Spacer(modifier = Modifier.height(4.dp))
-                        Text(
-                            text = comentario,
-                            modifier = Modifier.padding(start = 16.dp, bottom = 8.dp, end = 16.dp),
-                            style = MaterialTheme.typography.bodyMedium
+                            text = "Cerrar Sesión",
+                            style = MaterialTheme.typography.bodyMedium,
+                            textAlign = TextAlign.Start,
+                            modifier = Modifier.padding(start = 8.dp)
                         )
                     }
                 }
             }
         },
         content = { paddingValues ->
-            MainContent(modifier = Modifier.padding(paddingValues), navController = navController)
+            MainContent(modifier = Modifier.padding(paddingValues), navigateToHelados)
         }
     )
 }
+
 
 @Composable
 fun Encabezado() {
@@ -80,55 +92,46 @@ fun Encabezado() {
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
-            modifier = Modifier
-                .padding(bottom = 16.dp)
-                .fillMaxWidth()
+            modifier = Modifier.padding(bottom = 16.dp)
         )
-
         Image(
             painter = painterResource(id = R.drawable.portada),
-            contentDescription = "Logo de Heladería Sammy jj",
-            modifier = Modifier
-                .size(200.dp)
+            contentDescription = "Logo de Heladería Sammy",
+            modifier = Modifier.size(200.dp)
         )
     }
 }
 
 @Composable
-fun MainContent(modifier: Modifier = Modifier, navController: NavHostController) {
+fun MainContent(modifier: Modifier = Modifier, navigateToHelados: () -> Unit) {
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.Top,
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Encabezado()
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = { navController.navigate("clasico") },
-            modifier = Modifier.fillMaxWidth(),
+            onClick = { navigateToHelados() },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(72.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Red,
                 contentColor = md_theme_light_onSecondary
-            )
-
+            ),
+            shape = MaterialTheme.shapes.large
         ) {
-            Text("Helado Clásico")
+            Text(
+                "Helado Clásico",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White
+            )
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Button(
-            onClick = { },
-            modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Red,
-                contentColor = md_theme_light_onSecondary
-            )
-        ) {
-            Text("Helado Personalizado")
-        }
     }
 }

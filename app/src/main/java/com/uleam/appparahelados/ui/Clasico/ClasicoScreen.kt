@@ -18,10 +18,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.uleam.appparahelados.R
 import com.uleam.appparahelados.ui.AppViewModelProvider
 import com.uleam.appparahelados.ui.navigation.NavigationController
 import kotlinx.coroutines.delay
 
+object HeladoClasicoDestionation : NavigationController {
+    override val route = "helado_clasico"
+    override val titleRes = R.string.helado_clasico
+}
 @Composable
 fun ClasicoScreen(
     navController: NavHostController,

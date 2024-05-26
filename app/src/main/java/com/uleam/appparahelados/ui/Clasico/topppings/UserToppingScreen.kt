@@ -115,7 +115,7 @@ fun UserToppingScreen(
             Button(onClick = { navController.navigate("principal") }) {
                 Text("Regresar al inicio")
             }
-            Button(onClick = { navController.navigate("clasico") }) {
+            Button(onClick = { navController.navigate("helado_clasico") }) {
                 Text("Regresar a helados")
             }
         }

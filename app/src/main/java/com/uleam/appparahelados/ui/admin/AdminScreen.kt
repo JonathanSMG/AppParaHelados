@@ -1,24 +1,13 @@
 package com.uleam.appparahelados.ui.admin
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ExitToApp
+import androidx.compose.material.icons.filled.Logout
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,17 +27,56 @@ object AdminDestionation : NavigationController {
 }
 
 @Composable
-fun AdminScreen(navigateTopping: () -> Unit,
-                navigateHelado: () -> Unit,
-                viewModel: AdminViewModel = viewModel(factory = AppViewModelProvider.Factory)) {
+fun AdminScreen(
+    navigateTopping: () -> Unit,
+    navigateHelado: () -> Unit,
+    navigateCerrarSesion: () -> Unit,
+    viewModel: AdminViewModel = viewModel(factory = AppViewModelProvider.Factory)
+) {
     Scaffold(
-        content = { paddingValues ->
-            MainContent(
-                navigateTopping = {navigateTopping()},
-                navigateHelado = {navigateHelado()},
-                modifier = Modifier.padding(paddingValues))
-        }
-    )
+        modifier = Modifier.fillMaxSize(),
+        bottomBar = {
+            BottomAppBar(
+                modifier = Modifier.fillMaxWidth(),
+                containerColor = MaterialTheme.colorScheme.secondaryContainer
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        IconButton(
+                            onClick = navigateCerrarSesion
+                        ) {
+                            Icon(
+                                Icons.Filled.Logout,
+                                contentDescription = "Cerrar Sesión",
+                                tint = Color.Black
+                            )
+                        }
+
+                        Text(
+                            text = "Cerrar Sesión",
+                            style = MaterialTheme.typography.bodyMedium,
+                            textAlign = TextAlign.Start,
+                            modifier = Modifier.padding(start = 8.dp)
+                        )
+                    }
+                }
+            }
+        },
+    ) { paddingValues ->
+        MainContent(
+            navigateTopping = { navigateTopping() },
+            navigateHelado = { navigateHelado() },
+            modifier = Modifier.padding(paddingValues)
+        )
+    }
 }
 
 @Composable
@@ -58,115 +86,111 @@ fun Encabezado() {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(100.dp))
+        Spacer(modifier = Modifier.height(50.dp))
         Text(
             text = "Administración de Helados",
             color = Color.Black,
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
-            modifier = Modifier
-                .padding(bottom = 16.dp)
-                .fillMaxWidth()
+            modifier = Modifier.padding(bottom = 16.dp)
         )
     }
 }
 
 @Composable
-fun MainContent(navigateTopping: () -> Unit,
-                navigateHelado: () -> Unit,
-                modifier: Modifier = Modifier) {
+fun MainContent(
+    navigateTopping: () -> Unit,
+    navigateHelado: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     var menuVisible by remember { mutableStateOf(false) }
 
     Column(
         modifier = modifier
             .fillMaxSize()
             .padding(16.dp),
-        verticalArrangement = Arrangement.Top,
+        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Encabezado()
-        Spacer(modifier = Modifier.height(16.dp))
 
-        Box(
-            modifier = Modifier.fillMaxWidth(),
-            contentAlignment = Alignment.Center
+        Spacer(modifier = Modifier.height(40.dp))
+
+        IconButton(
+            onClick = { menuVisible = !menuVisible },
+            modifier = Modifier.size(48.dp)
         ) {
-            if (!menuVisible) {
-                Button(
-                    onClick = { menuVisible = true },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Red,
-                        contentColor = md_theme_light_onSecondary
-                    )
-                ) {
-                    Text("Abrir menú")
-                }
-            } else {
-                Row(
-                    horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Button(
-                        onClick = { menuVisible = false },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.Red,
-                            contentColor = md_theme_light_onSecondary
-                        )
-                    ) {
-                        Text("Cerrar menú")
-                    }
-                }
-            }
+            Icon(Icons.Filled.Settings, contentDescription = "Menu")
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
         if (menuVisible) {
             MenuContent(
-                navigateTopping = {navigateTopping()},
-                navigateHelado = {navigateHelado()},
-                onCloseMenu = { menuVisible = false },
-                modifier = Modifier.fillMaxWidth().height(IntrinsicSize.Max)
+                navigateTopping = navigateTopping,
+                navigateHelado = navigateHelado,
+                onCloseMenu = { menuVisible = false }
             )
         }
     }
 }
 
 @Composable
-fun MenuContent(navigateTopping: () -> Unit,
-                navigateHelado: () -> Unit,
-                onCloseMenu: () -> Unit, modifier: Modifier = Modifier) {
+fun MenuContent(
+    navigateTopping: () -> Unit,
+    navigateHelado: () -> Unit,
+    onCloseMenu: () -> Unit
+) {
     Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.End
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
-        Spacer(modifier = Modifier.height(16.dp))
-
         Button(
-            onClick = { navigateTopping() },
-            modifier = Modifier.fillMaxWidth(),
+            onClick = {
+                navigateTopping()
+                onCloseMenu()
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(72.dp),
+            shape = RoundedCornerShape(8.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Red,
                 contentColor = md_theme_light_onSecondary
             )
         ) {
-            Text("Toppings")
+            Text(
+                "Administrar Toppings",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
+            )
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
         Button(
-            onClick = { navigateHelado() },
-            modifier = Modifier.fillMaxWidth(),
+            onClick = {
+                navigateHelado()
+                onCloseMenu()
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(72.dp),
+            shape = RoundedCornerShape(8.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Red,
                 contentColor = md_theme_light_onSecondary
             )
         ) {
-            Text("Sabores")
+            Text(
+                "Administrar Sabores",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
+            )
         }
     }
 }

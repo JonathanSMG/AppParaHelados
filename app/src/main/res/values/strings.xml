@@ -41,6 +41,7 @@
     <string name="delete_question">Deseas borrar?</string>
 
     <string name="attention">Atencion</string>
+    <string name="ic_logout">Cerrar sesion</string>
 
     <string name="save_action">Guardar</string>
     <string name="required_fields">Necesitas llenar todos los datos</string>
@@ -69,6 +70,7 @@
     <string name="helado_descripcion_req">descripcion</string>
     <string name="helado_precio_base_req">precio</string>
     <string name="helado_cantidad_req">cantidad</string>
+    <string name="helado_clasico">helado clasico\n</string>
 
 
 </resources>

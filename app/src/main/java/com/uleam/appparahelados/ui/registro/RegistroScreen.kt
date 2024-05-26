@@ -131,17 +131,14 @@ fun RegistroScreen(
                 )
                 Spacer(modifier = Modifier.height(16.dp))
 
-
                 Button(
                     onClick = {
-                        if (nombre.isEmpty() || correo.isEmpty() || direccion.isEmpty() || pass.isEmpty() || telefono.isEmpty()) {
-                            errorMessage.value = "Todos los campos son obligatorios."
-                            showErrorDialog.value = true
-                        } else if (pass.length < 6) {
-                            errorMessage.value = "La contraseña debe tener al menos 6 caracteres."
+                        val error = validarCamposRegistro(nombre, correo, direccion, pass, telefono)
+                        if (error != null) {
+                            errorMessage.value = error
                             showErrorDialog.value = true
                         } else {
-                            viewModel.onSubmitButtonClick(nombre, correo, pass, direccion, telefono)
+                            viewModel.onSubmitButtonClick(nombre, correo, pass, telefono, direccion)
                             alertDialogVisibleState.value = true
                         }
                     },
@@ -153,7 +150,6 @@ fun RegistroScreen(
                 ) {
                     Text(text = "Registrarse")
                 }
-
 
                 if (alertDialogVisibleState.value) {
                     RegistroExitosoDialog {
@@ -193,7 +189,7 @@ fun RegistroExitosoDialog(onClose: () -> Unit) {
         text = { Text("¡Tu registro se ha completado exitosamente! ¿Deseas iniciar sesión ahora?") },
         confirmButton = {
             Button(
-                onClick = onClose ,
+                onClick = onClose,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = md_theme_light_secondary,
                     contentColor = md_theme_light_onSecondary
@@ -203,6 +199,23 @@ fun RegistroExitosoDialog(onClose: () -> Unit) {
             }
         }
     )
+}
+fun validarCamposRegistro(
+    nombre: String,
+    correo: String,
+    direccion: String,
+    pass: String,
+    telefono: String
+): String? {
+    return when {
+        nombre.isEmpty() -> "El nombre es obligatorio."
+        correo.isEmpty() -> "El correo electrónico es obligatorio."
+        direccion.isEmpty() -> "La dirección es obligatoria."
+        pass.isEmpty() -> "La contraseña es obligatoria."
+        telefono.isEmpty() -> "El teléfono es obligatorio."
+        pass.length < 6 -> "La contraseña debe tener al menos 6 caracteres."
+        else -> null
+    }
 }
 
 @Composable
@@ -245,5 +258,4 @@ fun Encabezado(onBackPressed: () -> Unit) {
             )
         }
     }
-
 }

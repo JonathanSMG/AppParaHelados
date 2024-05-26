@@ -19,6 +19,7 @@ import com.uleam.appparahelados.ui.registro.RegistroDistinationScreen
 import com.uleam.appparahelados.ui.registro.RegistroScreen
 import com.uleam.appparahelados.ui.splash.SplashScreen
 import com.uleam.appparahelados.ui.Clasico.ClasicoScreen
+import com.uleam.appparahelados.ui.Clasico.HeladoClasicoDestionation
 import com.uleam.appparahelados.ui.Clasico.toppings.UserToppingDestionation
 import com.uleam.appparahelados.ui.Clasico.toppings.UserToppingScreen
 import com.uleam.appparahelados.ui.admin.helado.HeladoDestination
@@ -60,16 +61,19 @@ fun NavigationController(
                 navigateToLogin = { navController.navigate(LoginDestinationScreen.route) })
         }
         composable(route = PrincipalDestionation.route) {
-            PrincipalScreen(navController = navController) // Pasar navController aquí
-        }
+            PrincipalScreen(
+                navigateToHelados = { navController.navigate(HeladoClasicoDestionation.route) },
+                navigateToCloseSession = { navController.navigate(LoginDestinationScreen.route) })
 
+        }
         composable(route = AdminDestionation.route) {
             AdminScreen(
                 navigateTopping = { navController.navigate(ToppingDestination.route) },
-                navigateHelado = { navController.navigate(HeladoDestination.route) })
+                navigateHelado = { navController.navigate(HeladoDestination.route) },
+                navigateCerrarSesion = { navController.navigate(LoginDestinationScreen.route) })
 
         }
-        composable(route = "clasico") {
+        composable(route = HeladoClasicoDestionation.route) {
             ClasicoScreen(navController = navController)
         }
         composable(route = UserToppingDestionation.route) {
