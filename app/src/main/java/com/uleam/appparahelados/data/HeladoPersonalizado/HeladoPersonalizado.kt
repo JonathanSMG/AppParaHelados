@@ -19,5 +19,6 @@ data class HeladoPersonalizado(
     val nombre: String,
     val heladoId: Int,
     val usuarioId: Int,
-    val precioTotal: Double
+    val precioTotal: Double,
+    val cantidad: Int =0
 )

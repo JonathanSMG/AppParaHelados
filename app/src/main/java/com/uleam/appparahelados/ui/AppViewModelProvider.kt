@@ -17,7 +17,6 @@
 package com.uleam.appparahelados.ui
 
 import PrincipalViewModel
-import android.app.Application
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory
 import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.CreationExtras
@@ -25,9 +24,10 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.uleam.appparahelados.HeladosApplication
 import com.uleam.appparahelados.ui.admin.AdminViewModel
-import com.uleam.appparahelados.ui.admin.topping.ToppingDetailsViewModel
-import com.uleam.appparahelados.ui.admin.topping.ToppingEditViewModel
-import com.uleam.appparahelados.ui.admin.topping.ToppingEntryViewModel
+import com.uleam.appparahelados.ui.admin.topping.ToppingViewModel
+import com.uleam.appparahelados.ui.admin.topping.details.ToppingDetailsViewModel
+import com.uleam.appparahelados.ui.admin.topping.edit.ToppingEditViewModel
+import com.uleam.appparahelados.ui.admin.topping.entry.ToppingEntryViewModel
 import com.uleam.appparahelados.ui.login.LoginViewModel
 import com.uleam.appparahelados.ui.registro.RegisterViewModel
 
@@ -36,7 +36,8 @@ object AppViewModelProvider {
     val Factory = viewModelFactory {
         initializer {
             ToppingEditViewModel(
-                this.createSavedStateHandle()
+                this.createSavedStateHandle(),
+                heladeriaApplication().container.toppingRepository
             )
         }
         initializer {
@@ -44,7 +45,8 @@ object AppViewModelProvider {
         }
         initializer {
             ToppingDetailsViewModel(
-                this.createSavedStateHandle()
+                this.createSavedStateHandle(),
+                heladeriaApplication().container.toppingRepository
             )
         }
         initializer {
@@ -58,6 +60,9 @@ object AppViewModelProvider {
         }
         initializer {
             AdminViewModel()
+        }
+        initializer {
+            ToppingViewModel(heladeriaApplication().container.toppingRepository)
         }
     }
 }

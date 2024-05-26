@@ -1,7 +1,9 @@
 package com.uleam.appparahelados.ui.registro
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -31,6 +33,7 @@ object RegistroDistinationScreen : NavigationController {
     override val titleRes = R.string.registros_title
 }
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegistroScreen(
@@ -47,135 +50,137 @@ fun RegistroScreen(
     val alertDialogVisibleState = remember { mutableStateOf(false) }
     val showErrorDialog = remember { mutableStateOf(false) }
     val errorMessage = remember { mutableStateOf("") }
-    val scrollState = rememberScrollState()
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color = Color(0xFFF5F5F5))
-            .verticalScroll(rememberScrollState())
-    ) {
-        Column(
+    Scaffold {
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(horizontal = 16.dp)
         ) {
-            Encabezado { navigateToLogin() }
+            item {
+                Encabezado { navigateToLogin() }
 
-            Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
-            val textFieldModifier = Modifier
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(16.dp))
-                .padding(vertical = 4.dp, horizontal = 16.dp)
+                val textFieldModifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(16.dp))
+                    .padding(vertical = 4.dp, horizontal = 16.dp)
 
-            val buttonModifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp, horizontal = 16.dp)
+                val buttonModifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp, horizontal = 16.dp)
 
-            OutlinedTextField(
-                value = nombre,
-                onValueChange = { nombre = it },
-                label = { Text(text = "Nombre") },
-                modifier = textFieldModifier,
-                colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = md_theme_light_onSurfaceVariant)
-            )
-            OutlinedTextField(
-                value = correo,
-                onValueChange = { correo = it },
-                label = { Text(text = "Correo electrónico") },
-                modifier = textFieldModifier,
-                colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = md_theme_light_onSurfaceVariant)
-            )
-            OutlinedTextField(
-                value = direccion,
-                onValueChange = { direccion = it },
-                label = { Text(text = "Dirección") },
-                modifier = textFieldModifier,
-                colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = md_theme_light_onSurfaceVariant)
-            )
-            OutlinedTextField(
-                value = telefono,
-                onValueChange = { telefono = it },
-                label = { Text(text = "Teléfono") },
-                modifier = textFieldModifier,
-                colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = md_theme_light_onSurfaceVariant)
-            )
-
-            OutlinedTextField(
-                value = pass,
-                onValueChange = { pass = it },
-                label = { Text(text = "Contraseña") },
-                modifier = textFieldModifier,
-                visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
-                trailingIcon = {
-                    val image = if (passwordVisibility)
-                        painterResource(id = R.drawable.visibility)
-                    else painterResource(id = R.drawable.visible)
-
-                    IconButton(onClick = {
-                        passwordVisibility = !passwordVisibility
-                    }) {
-                        Icon(painter = image, contentDescription = if (passwordVisibility) "Ocultar contraseña" else "Mostrar contraseña")
-                    }
-                },
-                colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = md_theme_light_onSurfaceVariant),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Button(
-                onClick = {
-                    if (nombre.isEmpty() || correo.isEmpty() || direccion.isEmpty() || pass.isEmpty() || telefono.isEmpty()) {
-                        errorMessage.value = "Todos los campos son obligatorios."
-                        showErrorDialog.value = true
-                    } else if (pass.length < 6) {
-                        errorMessage.value = "La contraseña tiene que tener almenos mas de 6 caracteres."
-                        showErrorDialog.value = true
-                    } else {
-                        viewModel.onSubmitButtonClick(nombre, correo, direccion, pass, telefono)
-                        alertDialogVisibleState.value = true
-                    }
-                },
-                modifier = buttonModifier,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Red,
-                    contentColor = md_theme_light_onSecondary
+                OutlinedTextField(
+                    value = nombre,
+                    onValueChange = { nombre = it },
+                    label = { Text(text = "Nombre") },
+                    modifier = textFieldModifier,
+                    colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = md_theme_light_onSurfaceVariant),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
+                    singleLine = true
                 )
-            ) {
-                Text(text = "Registrarse")
-            }
+                OutlinedTextField(
+                    value = correo,
+                    onValueChange = { correo = it },
+                    label = { Text(text = "Correo electrónico") },
+                    modifier = textFieldModifier,
+                    colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = md_theme_light_onSurfaceVariant),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email, imeAction = ImeAction.Next),
+                    singleLine = true
+                )
+                OutlinedTextField(
+                    value = direccion,
+                    onValueChange = { direccion = it },
+                    label = { Text(text = "Dirección") },
+                    modifier = textFieldModifier,
+                    colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = md_theme_light_onSurfaceVariant),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
+                    singleLine = true
+                )
+                OutlinedTextField(
+                    value = telefono,
+                    onValueChange = { telefono = it },
+                    label = { Text(text = "Teléfono") },
+                    modifier = textFieldModifier,
+                    colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = md_theme_light_onSurfaceVariant),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone, imeAction = ImeAction.Next),
+                    singleLine = true
+                )
 
-            // Mostrar el AlertDialog si es necesario
-            if (alertDialogVisibleState.value) {
-                RegistroExitosoDialog {
-                    alertDialogVisibleState.value = false
-                    navigateToLogin()
+                OutlinedTextField(
+                    value = pass,
+                    onValueChange = { pass = it },
+                    label = { Text(text = "Contraseña") },
+                    modifier = textFieldModifier,
+                    visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
+                    trailingIcon = {
+                        val image = if (passwordVisibility)
+                            painterResource(id = R.drawable.visibility)
+                        else painterResource(id = R.drawable.visible)
+
+                        IconButton(onClick = {
+                            passwordVisibility = !passwordVisibility
+                        }) {
+                            Icon(painter = image, contentDescription = if (passwordVisibility) "Ocultar contraseña" else "Mostrar contraseña")
+                        }
+                    },
+                    colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = md_theme_light_onSurfaceVariant),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.None),
+                    singleLine = true,
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+
+
+                Button(
+                    onClick = {
+                        if (nombre.isEmpty() || correo.isEmpty() || direccion.isEmpty() || pass.isEmpty() || telefono.isEmpty()) {
+                            errorMessage.value = "Todos los campos son obligatorios."
+                            showErrorDialog.value = true
+                        } else if (pass.length < 6) {
+                            errorMessage.value = "La contraseña debe tener al menos 6 caracteres."
+                            showErrorDialog.value = true
+                        } else {
+                            viewModel.onSubmitButtonClick(nombre, correo, direccion, pass, telefono)
+                            alertDialogVisibleState.value = true
+                        }
+                    },
+                    modifier = buttonModifier,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Red,
+                        contentColor = md_theme_light_onSecondary
+                    )
+                ) {
+                    Text(text = "Registrarse")
+                }
+
+                if (alertDialogVisibleState.value) {
+                    RegistroExitosoDialog {
+                        alertDialogVisibleState.value = false
+                        navigateToLogin()
+                    }
+                }
+
+                if (showErrorDialog.value) {
+                    AlertDialog(
+                        onDismissRequest = { showErrorDialog.value = false },
+                        title = { Text("Error") },
+                        text = { Text(errorMessage.value) },
+                        confirmButton = {
+                            Button(
+                                onClick = { showErrorDialog.value = false },
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = md_theme_light_secondary,
+                                    contentColor = md_theme_light_onSecondary
+                                )
+                            ) {
+                                Text("OK")
+                            }
+                        }
+                    )
                 }
             }
-
-            if (showErrorDialog.value) {
-                AlertDialog(
-                    onDismissRequest = { showErrorDialog.value = false },
-                    title = { Text("Error") },
-                    text = { Text(errorMessage.value) },
-                    confirmButton = {
-                        Button(
-                            onClick = { showErrorDialog.value = false },
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = md_theme_light_secondary,
-                                contentColor = md_theme_light_onSecondary
-                            )
-                        ) {
-                            Text("OK")
-                        }
-                    }
-                )
-            }
         }
-    }
-    LaunchedEffect(Unit) {
-        scrollState.animateScrollTo(scrollState.maxValue)
     }
 }
 

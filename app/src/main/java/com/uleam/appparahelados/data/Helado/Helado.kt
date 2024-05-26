@@ -10,5 +10,7 @@ data class Helado(
     val nombre: String,
     val sabor: String,
     val descripcion: String,
-    val precioBase: Double
+    val precioBase: Double,
+    val cantidad: Int =0
+
 )

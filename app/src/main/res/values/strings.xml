@@ -28,10 +28,12 @@
 
     <string name="vender">Vender</string>
     <string name="eliminar">Eliminar</string>
+    <string name="in_stock">%d en stock</string>
 
 
     <string name="topping_nombre">Nombre</string>
     <string name="topping_precio">Precio</string>
+    <string name="topping_cantidad">Cantidad</string>
 
     <string name="no">No</string>
     <string name="yes">Si</string>
@@ -42,5 +44,13 @@
 
     <string name="save_action">Guardar</string>
     <string name="required_fields">Necesitas llenar todos los datos</string>
+
+    <string name="topping">Toppings</string>
+
+    <string name="no_toppings">No hay topping actualmente</string>
+
+    <string name="topping_cantidad_req">Cantidad</string>
+
+    <string name="topping_editor">Editar</string>
 
 </resources>

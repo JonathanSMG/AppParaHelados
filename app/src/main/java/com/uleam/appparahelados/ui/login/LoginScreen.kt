@@ -6,6 +6,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -21,11 +23,15 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -46,7 +52,7 @@ object LoginDestinationScreen : NavigationController {
     override val route = "login"
     override val titleRes = R.string.login_title
 }
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun LoginScreen(
     navigateTohome: () -> Unit,
@@ -60,19 +66,20 @@ fun LoginScreen(
 
     val alertDialogVisibleState = remember { mutableStateOf(false) }
     val showErrorDialog = remember { mutableStateOf(false) }
-    val scrollState = rememberScrollState()
     val dialogRole = remember { mutableStateOf<String?>(null) }
+
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(color = Color(0xFFF5F5F5))
-            .verticalScroll(rememberScrollState())
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(horizontal = 16.dp)
+                .verticalScroll(rememberScrollState())
         ) {
             Encabezado()
             Spacer(modifier = Modifier.height(16.dp))
@@ -82,13 +89,14 @@ fun LoginScreen(
                 .clip(RoundedCornerShape(16.dp))
                 .padding(vertical = 4.dp, horizontal = 16.dp)
 
-
             OutlinedTextField(
                 value = correo,
                 onValueChange = { correo = it },
                 label = { Text(text = "Correo electrónico") },
                 modifier = textFieldModifier,
-                colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = md_theme_light_onSurfaceVariant)
+                colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = md_theme_light_onSurfaceVariant),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email, imeAction = ImeAction.Next),
+                singleLine = true
             )
 
             OutlinedTextField(
@@ -108,11 +116,11 @@ fun LoginScreen(
                         Icon(painter = image, contentDescription = if (passwordVisibility) "Ocultar contraseña" else "Mostrar contraseña")
                     }
                 },
-                colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = md_theme_light_onSurfaceVariant)
+                colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = md_theme_light_onSurfaceVariant),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done),
+                singleLine = true
+
             )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -138,6 +146,7 @@ fun LoginScreen(
             ) {
                 Text(text = "Iniciar Sesión")
             }
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -181,6 +190,7 @@ fun LoginScreen(
             }
         }
     }
+
     if (alertDialogVisibleState.value) {
         InicioSesionExitosoDialog(
             onClose = {
@@ -192,9 +202,6 @@ fun LoginScreen(
             },
             role = dialogRole.value
         )
-    }
-    LaunchedEffect(Unit) {
-        scrollState.animateScrollTo(scrollState.maxValue)
     }
 }
 

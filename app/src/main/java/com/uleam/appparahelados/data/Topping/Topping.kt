@@ -8,5 +8,6 @@ data class Topping(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val nombre: String,
-    val precio: Double
+    val precio: Double,
+    val cantidad: Int =0
 )

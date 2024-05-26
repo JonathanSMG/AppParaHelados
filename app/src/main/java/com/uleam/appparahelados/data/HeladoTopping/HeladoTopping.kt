@@ -15,5 +15,6 @@ import com.uleam.appparahelados.data.Topping.Topping
 )
 data class HeladoTopping(
     val heladoPersonalizadoId: Int,
-    val toppingId: Int
+    val toppingId: Int,
+
 )
