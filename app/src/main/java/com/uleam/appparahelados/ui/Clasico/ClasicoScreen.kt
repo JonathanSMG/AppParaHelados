@@ -91,7 +91,7 @@ fun ClasicoScreen(navController: NavHostController,
             Button(onClick = { navController.navigate("principal") }) {
                 Text("Regresar al inicio")
             }
-            Button(onClick = { navController.navigate("interfaz_topping") }) {
+            Button(onClick = { navController.navigate("user_topping") }) {
                 Text("Toppings")
             }
         }

@@ -19,6 +19,8 @@ import com.uleam.appparahelados.ui.registro.RegistroDistinationScreen
 import com.uleam.appparahelados.ui.registro.RegistroScreen
 import com.uleam.appparahelados.ui.splash.SplashScreen
 import com.uleam.appparahelados.ui.Clasico.ClasicoScreen
+import com.uleam.appparahelados.ui.Clasico.topppings.UserToppingDestionation
+import com.uleam.appparahelados.ui.Clasico.topppings.UserToppingScreen
 import com.uleam.appparahelados.ui.admin.helado.HeladoDestination
 import com.uleam.appparahelados.ui.admin.helado.HeladoScreen
 import com.uleam.appparahelados.ui.admin.helado.details.HeladoDetailsDestination
@@ -60,6 +62,7 @@ fun NavigationController(
         composable(route = PrincipalDestionation.route) {
             PrincipalScreen(navController = navController) // Pasar navController aquí
         }
+
         composable(route = AdminDestionation.route) {
             AdminScreen(
                 navigateTopping = { navController.navigate(ToppingDestination.route) },
@@ -69,6 +72,10 @@ fun NavigationController(
         composable(route = "clasico") {
             ClasicoScreen(navController = navController)
         }
+        composable(route = UserToppingDestionation.route) {
+            UserToppingScreen(navController = navController)
+        }
+
         composable(route = ToppingDestination.route) {
             ToppingScreen(
                 navigateToItemEntry = { navController.navigate(ToppingEntryDestination.route) },

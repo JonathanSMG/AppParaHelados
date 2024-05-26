@@ -19,9 +19,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.uleam.appparahelados.R
 import com.uleam.appparahelados.data.Topping.Topping
 import com.uleam.appparahelados.ui.AppViewModelProvider
+import com.uleam.appparahelados.ui.navigation.NavigationController
 
+object UserToppingDestionation : NavigationController {
+    override val route = "user_topping"
+    override val titleRes = R.string.admin_title
+}
 @Composable
 fun UserToppingScreen(navController: NavHostController,
                       viewModel: UserToppingViewModel = viewModel(factory = AppViewModelProvider.Factory)
@@ -81,11 +87,11 @@ fun UserToppingScreen(navController: NavHostController,
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Button(onClick = { navController.navigate("principal") }) {
+            Button(onClick = { navController.navigate("clasico") }) {
                 Text("Regresar al inicio")
             }
-            Button(onClick = { navController.navigate("interfaz_helado") }) {
-                Text("Helados")
+            Button(onClick = {  }) {
+                Text("Sabores")
             }
         }
     }
