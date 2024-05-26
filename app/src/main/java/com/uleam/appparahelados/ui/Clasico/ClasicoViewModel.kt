@@ -4,29 +4,31 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import com.uleam.appparahelados.data.Helado.Helado
+import com.uleam.appparahelados.data.Helado.interfaces.HeladoRepository
 
-class ClasicoViewModel : ViewModel() {
-    private val _helados = MutableStateFlow<List<Helado>>(emptyList())
-    val helados: StateFlow<List<Helado>> = _helados
+class ClasicoViewModel(private val heladoRepository: HeladoRepository) : ViewModel() {
 
     private val _cantidadHelados = MutableStateFlow<Map<Int, Int>>(emptyMap())
     val cantidadHelados: StateFlow<Map<Int, Int>> = _cantidadHelados
 
-    init {
-        // Simulación de datos, en una app real obtendría los datos de un repositorio o base de datos
-        viewModelScope.launch {
-            _helados.value = listOf(
-                Helado(1, "Chocolate", "Delicioso helado de chocolate", "Delicioso helado de chocolate", 2.5),
-                Helado(2, "Fresa", "Refrescante helado de fresa", "Delicioso helado de fresa", 2.2),
-                Helado(3, "Vainilla", "Clásico helado de vainilla", "Delicioso helado de vainilla",2.0),
-                Helado(4, "Menta", "Fresco helado de menta", "Delicioso helado de mente",2.0),
-                Helado(5, "Coco", "cocoloco", "Delicioso sabor a coco", 2.5),
-                Helado(6, "Oreo", "cocoloco", "De las galletas al helado", 3.0)
-            )
-        }
+    companion object {
+        private const val TIMEOUT_MILLIS = 5_000L
     }
+
+    val heladoUiState: StateFlow<ClasicoUiState> =
+        heladoRepository.getAllHeladosStream()
+            .map { ClasicoUiState(it) }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
+                initialValue = ClasicoUiState()
+            )
+
+    data class ClasicoUiState(val clasicoList: List<Helado> = listOf())
 
     fun incrementarCantidad(id: Int) {
         val current = _cantidadHelados.value.toMutableMap()

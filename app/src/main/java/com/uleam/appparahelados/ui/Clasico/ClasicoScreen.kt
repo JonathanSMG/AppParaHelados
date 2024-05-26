@@ -22,74 +22,80 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.uleam.appparahelados.data.Helado.Helado
+import com.uleam.appparahelados.ui.AppViewModelProvider
+import com.uleam.appparahelados.ui.admin.AdminViewModel
 
 @Composable
-fun ClasicoScreen(navController: NavHostController, viewModel: ClasicoViewModel = viewModel()) {
-    val helados by viewModel.helados.collectAsState()
+fun ClasicoScreen(navController: NavHostController,
+                  viewModel: ClasicoViewModel = viewModel(factory = AppViewModelProvider.Factory)
+) {
     val cantidades by viewModel.cantidadHelados.collectAsState()
+    val sabores by viewModel.heladoUiState.collectAsState()
 
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        Spacer(modifier = Modifier.height(60.dp)) // Añade espacio en la parte superior
-        helados.forEach { helado ->
-            val cantidad = cantidades[helado.id] ?: 0
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                Column {
-                    Text(text = helado.nombre, style = MaterialTheme.typography.titleLarge)
-                    Text(text = helado.descripcion, style = MaterialTheme.typography.bodyLarge)
-                    Text(text = "Precio: $${helado.precioBase}", style = MaterialTheme.typography.bodyMedium)
-                }
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    IconButton(onClick = { viewModel.decrementarCantidad(helado.id) }) {
-                        Icon(Icons.Default.Delete, contentDescription = "Decrementar")
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .padding(16.dp)) {
+
+        Spacer(modifier = Modifier.height(60.dp))
+
+        if (sabores.clasicoList.isEmpty()) {
+            Text(
+                text = "No se encuentran disponibles actualmente ningun helado.",
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.padding(vertical = 16.dp)
+            )
+        } else {
+            sabores.clasicoList.forEach { helado ->
+                val cantidad = cantidades[helado.id] ?: 0
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column {
+                        Text(
+                            text = helado.sabor,
+                            style = MaterialTheme.typography.titleLarge
+                        )
+                        Text(
+                            text = helado.descripcion,
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                        Text(
+                            text = "Precio: $${helado.precioBase}",
+                            style = MaterialTheme.typography.bodyMedium
+                        )
                     }
-                    Text(text = "$cantidad", style = MaterialTheme.typography.bodyLarge)
-                    IconButton(onClick = { viewModel.incrementarCantidad(helado.id) }) {
-                        Icon(Icons.Default.Add, contentDescription = "Incrementar")
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        IconButton(onClick = { viewModel.decrementarCantidad(helado.id) }) {
+                            Icon(Icons.Default.Delete, contentDescription = "Decrementar")
+                        }
+                        Text(
+                            text = "$cantidad",
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                        IconButton(onClick = { viewModel.incrementarCantidad(helado.id) }) {
+                            Icon(Icons.Default.Add, contentDescription = "Incrementar")
+                        }
                     }
                 }
+                Divider(modifier = Modifier.padding(vertical = 8.dp))
             }
-            Divider(modifier = Modifier.padding(vertical = 8.dp))
         }
-        Spacer(modifier = Modifier.height(24.dp)) // Espacio entre la lista de helados y los botones
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
             Button(onClick = { navController.navigate("principal") }) {
                 Text("Regresar al inicio")
             }
-            Button(onClick = { /* Navegar al carrito de compra */ }) {
-                Text("Ir al carrito de compra")
+            Button(onClick = { navController.navigate("interfaz_topping") }) {
+                Text("Toppings")
             }
         }
     }
 }
 
-@Composable
-fun HeladoItem(
-    helado: Helado,
-    cantidad: Int,
-    onIncrementar: () -> Unit,
-    onDecrementar: () -> Unit
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp)
-    ) {
-        Text(text = helado.nombre, style = MaterialTheme.typography.bodyLarge)
-        Text(text = helado.descripcion)
-        Text(text = "Precio: $${helado.precioBase}")
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            IconButton(onClick = onDecrementar) {
-                Icon(Icons.Default.Delete, contentDescription = "Decrementar")
-            }
 
-            Text(text = cantidad.toString())
-            IconButton(onClick = onIncrementar) {
-                Icon(Icons.Default.Add, contentDescription = "Incrementar")
-            }
-        }
-    }
-}

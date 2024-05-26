@@ -24,6 +24,7 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.uleam.appparahelados.HeladosApplication
+import com.uleam.appparahelados.ui.Clasico.ClasicoViewModel
 import com.uleam.appparahelados.ui.admin.AdminViewModel
 import com.uleam.appparahelados.ui.admin.helado.details.HeladoDetailsViewModel
 import com.uleam.appparahelados.ui.admin.helado.edit.HeladoEditViewModel
@@ -85,6 +86,9 @@ object AppViewModelProvider {
         }
         initializer {
             HeladoViewModel(heladeriaApplication().container.heladoRepository)
+        }
+        initializer {
+            ClasicoViewModel(heladeriaApplication().container.heladoRepository)
         }
 
     }
