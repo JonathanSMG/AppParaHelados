@@ -1,12 +1,11 @@
-package com.uleam.appparahelados.ui.Clasico.topppings
-
+package com.uleam.appparahelados.ui.Clasico.toppings
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.ThumbDown
+import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
@@ -22,22 +21,29 @@ import androidx.navigation.NavHostController
 import com.uleam.appparahelados.R
 import com.uleam.appparahelados.data.Topping.Topping
 import com.uleam.appparahelados.ui.AppViewModelProvider
+import com.uleam.appparahelados.ui.Clasico.topppings.UserToppingViewModel
 import com.uleam.appparahelados.ui.navigation.NavigationController
+import kotlinx.coroutines.delay
 
 object UserToppingDestionation : NavigationController {
     override val route = "user_topping"
     override val titleRes = R.string.admin_title
 }
+
 @Composable
-fun UserToppingScreen(navController: NavHostController,
-                      viewModel: UserToppingViewModel = viewModel(factory = AppViewModelProvider.Factory)
+fun UserToppingScreen(
+    navController: NavHostController,
+    viewModel: UserToppingViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val cantidades by viewModel.cantidadToppings.collectAsState()
     val toppings by viewModel.toppingUiState.collectAsState()
+    var message by remember { mutableStateOf<String?>(null) }
 
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .padding(16.dp)) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
 
         Spacer(modifier = Modifier.height(60.dp))
 
@@ -49,7 +55,6 @@ fun UserToppingScreen(navController: NavHostController,
             )
         } else {
             toppings.toppingList.forEach { topping ->
-                val cantidad = cantidades[topping.id] ?: 0
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
@@ -63,22 +68,42 @@ fun UserToppingScreen(navController: NavHostController,
                             text = "Precio: $${topping.precio}",
                             style = MaterialTheme.typography.bodyMedium
                         )
-                    }
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        IconButton(onClick = { viewModel.decrementarCantidad(topping.id) }) {
-                            Icon(Icons.Default.Delete, contentDescription = "Decrementar")
-                        }
                         Text(
-                            text = "$cantidad",
+                            text = "Cantidad: ${topping.cantidad}",
                             style = MaterialTheme.typography.bodyLarge
                         )
-                        IconButton(onClick = { viewModel.incrementarCantidad(topping.id) }) {
-                            Icon(Icons.Default.Add, contentDescription = "Incrementar")
+                    }
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        IconButton(onClick = {
+                            message = "Gracias :)"
+                            viewModel.incrementarCantidad(topping.id)
+                        }) {
+                            Icon(Icons.Default.ThumbUp, contentDescription = "Me gusta")
+                        }
+                        IconButton(onClick = {
+                            message = "Mejoraremos"
+                            viewModel.decrementarCantidad(topping.id)
+                        }) {
+                            Icon(Icons.Default.ThumbDown, contentDescription = "No me gusta")
                         }
                     }
                 }
                 Divider(modifier = Modifier.padding(vertical = 8.dp))
             }
+        }
+
+        if (message != null) {
+            LaunchedEffect(message) {
+                delay(2000)
+                message = null
+            }
+            Text(
+                text = message!!,
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(vertical = 16.dp)
+            )
         }
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -87,11 +112,11 @@ fun UserToppingScreen(navController: NavHostController,
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Button(onClick = { navController.navigate("clasico") }) {
+            Button(onClick = { navController.navigate("principal") }) {
                 Text("Regresar al inicio")
             }
-            Button(onClick = {  }) {
-                Text("Sabores")
+            Button(onClick = { navController.navigate("clasico") }) {
+                Text("Regresar a helados")
             }
         }
     }

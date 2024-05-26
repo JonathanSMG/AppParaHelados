@@ -19,8 +19,8 @@ import com.uleam.appparahelados.ui.registro.RegistroDistinationScreen
 import com.uleam.appparahelados.ui.registro.RegistroScreen
 import com.uleam.appparahelados.ui.splash.SplashScreen
 import com.uleam.appparahelados.ui.Clasico.ClasicoScreen
-import com.uleam.appparahelados.ui.Clasico.topppings.UserToppingDestionation
-import com.uleam.appparahelados.ui.Clasico.topppings.UserToppingScreen
+import com.uleam.appparahelados.ui.Clasico.toppings.UserToppingDestionation
+import com.uleam.appparahelados.ui.Clasico.toppings.UserToppingScreen
 import com.uleam.appparahelados.ui.admin.helado.HeladoDestination
 import com.uleam.appparahelados.ui.admin.helado.HeladoScreen
 import com.uleam.appparahelados.ui.admin.helado.details.HeladoDetailsDestination

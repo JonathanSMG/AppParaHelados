@@ -65,14 +65,16 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.7.5")
     implementation(libs.androidx.baseLibrary)
     implementation(libs.androidx.runtime.livedata)
-//Room
-    val room_version = "2.6.1"
 
-    //noinspection GradleDependency
+    // Room
+    val room_version = "2.6.1"
     implementation("androidx.room:room-runtime:$room_version")
     ksp("androidx.room:room-compiler:$room_version")
-    //noinspection GradleDependency
     implementation("androidx.room:room-ktx:$room_version")
+
+    // Compose Material Icons Extended
+    implementation("androidx.compose.material:material-icons-extended")
+
     // Testing
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -89,6 +91,4 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-
-
 }

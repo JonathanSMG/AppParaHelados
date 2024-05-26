@@ -33,24 +33,25 @@ class RegisterViewModel(private val repository: UsuarioRepository) : ViewModel()
     fun submitButton(
         nombre: String,
         correo: String,
-        direccion: String,
         pass: String,
-        telefono: String
+        telefono: String,
+        direccion: String,
     ) {
-        if (validateFields(nombre, correo, pass, direccion, telefono)) {
+        if (validateFields(nombre, correo,  pass, telefono, direccion)) {
             CoroutineScope(viewModelScope.coroutineContext).launch {
                 val usuarioExistente = repository.getUsuarioByUsername(correo)
                 if (usuarioExistente != null) {
                     Log.i("APP HELADOS", "El correo electrónico ya está registrado.")
                     _navigateToLogin.postValue(true)
                 } else {
-                    insert(Usuario(nombre, correo, pass, direccion, telefono, "Usuario"))
+                    insert(Usuario(nombre, correo, pass, telefono, direccion, "Usuario"))
                     Log.i("APP HELADOS", "Registro exitoso")
                     _navigateTo.postValue(true)
                 }
             }
         }
     }
+
 
 
     override fun onCleared() {
@@ -61,11 +62,11 @@ class RegisterViewModel(private val repository: UsuarioRepository) : ViewModel()
     fun validateFields(
         nombre: String,
         correo: String,
-        direccion: String,
         pass: String,
-        telefono: String
+        telefono: String,
+        direccion: String
     ): Boolean {
-        if (nombre.isEmpty() || correo.isEmpty() || direccion.isEmpty() || pass.isEmpty() || telefono.isEmpty()) {
+        if (nombre.isEmpty() || correo.isEmpty() || pass.isEmpty()  || telefono.isEmpty() || direccion.isEmpty() ) {
             Log.i("APP HELADOS","Por favor, complete todos los campos.")
             return false
         } else if (!correo.isValidEmail()) {
@@ -83,12 +84,18 @@ class RegisterViewModel(private val repository: UsuarioRepository) : ViewModel()
     companion object {
         private const val MIN_PASSWORD_LENGTH = 6
     }
-    fun onSubmitButtonClick(nombre: String, correo: String, direccion: String, pass: String, telefono: String) {
-        if (validateFields(nombre, correo, direccion, pass, telefono)) {
-            submitButton(nombre, correo, direccion, pass, telefono)
-            snackbarMessage.value = "Registro exitoso"
+    fun onSubmitButtonClick(
+        nombre: String,
+        correo: String,
+        pass: String,
+        telefono: String,
+        direccion: String
+    ) {
+        if (validateFields(nombre, correo, pass, telefono, direccion)) {
+            submitButton(nombre, correo,  pass, telefono, direccion)
         }
     }
+
     private fun insert(user: Usuario) {
         viewModelScope.launch {
             repository.insertUsuario(user)

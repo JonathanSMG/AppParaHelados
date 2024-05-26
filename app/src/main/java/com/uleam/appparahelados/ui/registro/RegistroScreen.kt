@@ -141,7 +141,7 @@ fun RegistroScreen(
                             errorMessage.value = "La contraseña debe tener al menos 6 caracteres."
                             showErrorDialog.value = true
                         } else {
-                            viewModel.onSubmitButtonClick(nombre, correo, direccion, pass, telefono)
+                            viewModel.onSubmitButtonClick(nombre, correo, pass, direccion, telefono)
                             alertDialogVisibleState.value = true
                         }
                     },
@@ -153,6 +153,7 @@ fun RegistroScreen(
                 ) {
                     Text(text = "Registrarse")
                 }
+
 
                 if (alertDialogVisibleState.value) {
                     RegistroExitosoDialog {
