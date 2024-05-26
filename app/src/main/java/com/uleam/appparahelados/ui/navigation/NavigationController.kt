@@ -19,6 +19,14 @@ import com.uleam.appparahelados.ui.registro.RegistroDistinationScreen
 import com.uleam.appparahelados.ui.registro.RegistroScreen
 import com.uleam.appparahelados.ui.splash.SplashScreen
 import com.uleam.appparahelados.ui.Clasico.ClasicoScreen
+import com.uleam.appparahelados.ui.admin.helado.HeladoDestination
+import com.uleam.appparahelados.ui.admin.helado.HeladoScreen
+import com.uleam.appparahelados.ui.admin.helado.details.HeladoDetailsDestination
+import com.uleam.appparahelados.ui.admin.helado.details.HeladoDetailsScreen
+import com.uleam.appparahelados.ui.admin.helado.edit.HeladoEditDestination
+import com.uleam.appparahelados.ui.admin.helado.edit.HeladoEditScreen
+import com.uleam.appparahelados.ui.admin.helado.entry.HeladoEntryDestination
+import com.uleam.appparahelados.ui.admin.helado.entry.HeladoEntryScreen
 import com.uleam.appparahelados.ui.admin.topping.ToppingDestination
 import com.uleam.appparahelados.ui.admin.topping.ToppingScreen
 import com.uleam.appparahelados.ui.admin.topping.details.ToppingDetailsDestination
@@ -55,7 +63,8 @@ fun NavigationController(
         composable(route = AdminDestionation.route) {
             AdminScreen(
                 navigateTopping = { navController.navigate(ToppingDestination.route) },
-                navigateHelado = { navController.navigate(ToppingDestination.route) })
+                navigateHelado = { navController.navigate(HeladoDestination.route) })
+
         }
         composable(route = "clasico") {
             ClasicoScreen(navController = navController)
@@ -93,6 +102,47 @@ fun NavigationController(
             })
         ) {
             ToppingEditScreen(
+                navigateBack = { navController.popBackStack() },
+                onNavigateUp = { navController.navigateUp() }
+            )
+        }
+
+
+
+
+        composable(route = HeladoDestination.route) {
+            HeladoScreen(
+                navigateToItemEntry = { navController.navigate(HeladoEntryDestination.route) },
+                navigateToItemUpdate = {
+                    navController.navigate("${HeladoDetailsDestination.route}/${it}")
+                },
+                navigateAdmin = { navController.navigate(AdminDestionation.route) },
+            )
+        }
+        composable(route = HeladoEntryDestination.route) {
+            HeladoEntryScreen(
+                navigateBack = { navController.popBackStack() },
+                onNavigateUp = { navController.navigateUp() }
+            )
+        }
+        composable(
+            route = HeladoDetailsDestination.routeWithArgs,
+            arguments = listOf(navArgument(HeladoDetailsDestination.heladoIdArg) {
+                type = NavType.IntType
+            })
+        ) {
+            HeladoDetailsScreen(
+                navigateToEditItem = { navController.navigate("${HeladoEditDestination.route}/$it") },
+                navigateBack = { navController.navigateUp() }
+            )
+        }
+        composable(
+            route = HeladoEditDestination.routeWithArgs,
+            arguments = listOf(navArgument(HeladoEditDestination.heladoIdArg) {
+                type = NavType.IntType
+            })
+        ) {
+            HeladoEditScreen(
                 navigateBack = { navController.popBackStack() },
                 onNavigateUp = { navController.navigateUp() }
             )

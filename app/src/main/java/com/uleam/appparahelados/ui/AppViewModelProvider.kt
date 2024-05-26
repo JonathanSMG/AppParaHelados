@@ -16,6 +16,7 @@
 
 package com.uleam.appparahelados.ui
 
+import HeladoViewModel
 import PrincipalViewModel
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory
 import androidx.lifecycle.createSavedStateHandle
@@ -24,6 +25,9 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.uleam.appparahelados.HeladosApplication
 import com.uleam.appparahelados.ui.admin.AdminViewModel
+import com.uleam.appparahelados.ui.admin.helado.details.HeladoDetailsViewModel
+import com.uleam.appparahelados.ui.admin.helado.edit.HeladoEditViewModel
+import com.uleam.appparahelados.ui.admin.helado.entry.HeladoEntryViewModel
 import com.uleam.appparahelados.ui.admin.topping.ToppingViewModel
 import com.uleam.appparahelados.ui.admin.topping.details.ToppingDetailsViewModel
 import com.uleam.appparahelados.ui.admin.topping.edit.ToppingEditViewModel
@@ -50,6 +54,21 @@ object AppViewModelProvider {
             )
         }
         initializer {
+            HeladoEditViewModel(
+                this.createSavedStateHandle(),
+                heladeriaApplication().container.heladoRepository
+            )
+        }
+        initializer {
+            HeladoEntryViewModel(heladeriaApplication().container.heladoRepository)
+        }
+        initializer {
+            HeladoDetailsViewModel(
+                this.createSavedStateHandle(),
+                heladeriaApplication().container.heladoRepository
+            )
+        }
+        initializer {
                 RegisterViewModel(heladeriaApplication().container.usuarioRepository)
         }
         initializer {
@@ -64,6 +83,10 @@ object AppViewModelProvider {
         initializer {
             ToppingViewModel(heladeriaApplication().container.toppingRepository)
         }
+        initializer {
+            HeladoViewModel(heladeriaApplication().container.heladoRepository)
+        }
+
     }
 }
 

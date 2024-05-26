@@ -12,5 +12,4 @@ data class Helado(
     val descripcion: String,
     val precioBase: Double,
     val cantidad: Int =0
-
 )

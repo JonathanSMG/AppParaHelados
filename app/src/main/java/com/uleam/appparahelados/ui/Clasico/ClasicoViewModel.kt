@@ -26,7 +26,6 @@ class ClasicoViewModel : ViewModel() {
                 Helado(6, "Oreo", "cocoloco", "De las galletas al helado", 3.0)
             )
         }
-
     }
 
     fun incrementarCantidad(id: Int) {

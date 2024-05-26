@@ -23,7 +23,7 @@
 
     <string name="topping_name_req">Nombre</string>
 
-    <string name="topping_price_req">Price</string>
+    <string name="topping_price_req">Precio :)</string>
 
 
     <string name="vender">Vender</string>
@@ -31,7 +31,7 @@
     <string name="in_stock">%d en stock</string>
 
 
-    <string name="topping_nombre">Nombre</string>
+    <string name="topping_nombre">Codigo</string>
     <string name="topping_precio">Precio</string>
     <string name="topping_cantidad">Cantidad</string>
 
@@ -52,5 +52,23 @@
     <string name="topping_cantidad_req">Cantidad</string>
 
     <string name="topping_editor">Editar</string>
+
+    <string name="helado_editor">Editar</string>
+    <string name="cantidad_editor">Cantidad</string>
+    <string name="helado_entry_title">heladitos sammy</string>
+    <string name="helado">Helado</string>
+
+    <string name="no_helados">No hay helados mi ciela</string>
+    <string name="helado_detail_title">heladeria sammy</string>
+    <string name="helado_nombre">nombre</string>
+    <string name="helado_cantidad">cantidad</string>
+    <string name="helado_precioBase">precio</string>
+    <string name="edit_helado_title">sammy heladero</string>
+    <string name="helado_name_req">nombre</string>
+    <string name="helado_sabor_req">sabor</string>
+    <string name="helado_descripcion_req">descripcion</string>
+    <string name="helado_precio_base_req">precio</string>
+    <string name="helado_cantidad_req">cantidad</string>
+
 
 </resources>

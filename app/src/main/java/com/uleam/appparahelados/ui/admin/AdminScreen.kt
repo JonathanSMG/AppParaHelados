@@ -153,7 +153,7 @@ fun MenuContent(navigateTopping: () -> Unit,
                 contentColor = md_theme_light_onSecondary
             )
         ) {
-            Text("Sabores")
+            Text("Toppings")
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -166,7 +166,7 @@ fun MenuContent(navigateTopping: () -> Unit,
                 contentColor = md_theme_light_onSecondary
             )
         ) {
-            Text("Toppins")
+            Text("Sabores")
         }
     }
 }
