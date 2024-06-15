@@ -1,0 +1,46 @@
+class Validator {
+  String? validateName(String value) {
+    String pattern = r'(^[a-zA-Z ]*$)';
+    RegExp regExp = RegExp(pattern);
+    if (value.isEmpty) {
+      return "Name is required";
+    } else if (!regExp.hasMatch(value)) {
+      return "Name must be a-z and A-Z";
+    }
+    return null;
+  }
+
+  String? validateMobile(String value) {
+    String pattern = r'(^[0-9]*$)';
+    RegExp regExp = RegExp(pattern);
+    if (value.isEmpty) {
+      return "Mobile is required";
+    } else if (value.length != 10) {
+      return "Mobile number must be 10 digits";
+    } else if (!regExp.hasMatch(value)) {
+      return "Mobile number must be digits";
+    }
+    return null;
+  }
+
+  String? validatePasswordLength(String value) {
+    if (value.isEmpty) {
+      return "Password can't be empty";
+    } else if (value.length < 10) {
+      return "Password must be longer than 10 characters";
+    }
+    return null;
+  }
+
+  String? validateEmail(String value) {
+    String pattern =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regExp = RegExp(pattern);
+    if (value.isEmpty) {
+      return "Email is required";
+    } else if (!regExp.hasMatch(value)) {
+      return "Invalid email";
+    }
+    return null;
+  }
+}
