@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     animationController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 2),
+      duration: const Duration(seconds: 2),
     );
 
     animation = CurvedAnimation(
@@ -28,8 +28,8 @@ class _SplashScreenState extends State<SplashScreen>
 
     animationController.forward();
 
-    Timer(Duration(seconds: 3), () {
-      Navigator.of(context).pushReplacementNamed(HOME_SCREEN);
+    Future.delayed(const Duration(seconds: 3), () {
+      Navigator.of(context).pushReplacementNamed(LOGIN);
     });
   }
 
@@ -42,24 +42,48 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.white,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Image.asset(
-              'images/logo.jpg',
-              width: animation.value * 250,
-              height: animation.value * 250,
-            ),
-            SizedBox(height: 20),
-            const Text(
-              '¡Bienvenido a Sammy Heladería!',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.blue,
-              ),
+            Column(
+              children: [
+                ClipOval(
+                  child: Container(
+                    width: 250,
+                    height: 250,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.black,
+                        width: 3,
+                      ),
+                    ),
+                    child: Image.asset(
+                      'assets/images/logo.png',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                    height: 10), // Espacio entre la imagen y el primer texto
+                const Text(
+                  '¡Heladería Sammy!',
+                  style: TextStyle(
+                    fontSize: 28, // Aumenta el tamaño del primer texto a 28
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 75, 40, 190),
+                  ),
+                ),
+                const SizedBox(height: 5), // Espacio entre los textos
+                const Text(
+                  '¡Bienvenido!',
+                  style: TextStyle(
+                    fontSize: 20, // Tamaño del segundo texto
+                    color: Colors.black,
+                  ),
+                ),
+              ],
             ),
           ],
         ),

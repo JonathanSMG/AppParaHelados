@@ -1,4 +1,8 @@
-final String SIGN_IN = 'signin';
-final String SIGN_UP = 'signup';
-final String HOME_SCREEN = 'home';
-final String SPLASH_SCREEN = 'splashscreen';
+const String REGISTRO = 'registros';
+const String LOGIN = 'login';
+
+const String HOME_USER = 'home_user';
+const String HOME_ADMIN = 'home_admin';
+
+const String ADMIN = 'administrador';
+const String SPLASH_SCREEN = 'splashscreen';
