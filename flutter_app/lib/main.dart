@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/constants/constants.dart';
+import 'package:flutter_app/rutas/constants.dart';
 import 'package:flutter_app/ui/SplashScreen.dart';
 import 'package:flutter_app/ui/user/HomeUserScreen.dart';
 import 'package:flutter_app/ui/login/LoginScreen.dart';

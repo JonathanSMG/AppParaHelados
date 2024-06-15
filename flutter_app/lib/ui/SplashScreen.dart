@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/constants/constants.dart'; // Asegúrate de importar tus constantes
+import 'package:flutter_app/rutas/constants.dart'; // Asegúrate de importar tus constantes
 
 class SplashScreen extends StatefulWidget {
   @override
