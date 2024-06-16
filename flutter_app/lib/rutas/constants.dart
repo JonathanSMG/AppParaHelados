@@ -1,4 +1,4 @@
-const String REGISTRO = 'registros';
+const String Registro = 'registros';
 const String LOGIN = 'login';
 
 const String HOME_USER = 'home_user';
