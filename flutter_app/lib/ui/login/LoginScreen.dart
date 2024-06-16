@@ -7,9 +7,10 @@ class LoginScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Sign In'),
       ),
-      body: Center(
-        child: Text('Registros aqui'),
+      body: const Center(
+        child: Text('Registros aquin cambio prueba de share live yuyo onichan Uwu que bienrrr, yo solo queria decirle un WAsaaaaaaaaaaaa, pero ella solo me dijo skibidy toilet-, hay fue cuando le hice un Atake loliiiiaaaaaaaaa bro? todo bien en casa?'),
       ),
     );
   }
 }
+  
