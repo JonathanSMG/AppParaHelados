@@ -21,10 +21,10 @@ class ToppingsScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.red),
+          icon: const Icon(Icons.arrow_back, color: Colors.red),
           onPressed: () {},
         ),
-        title: Text('Topings Screens', style: TextStyle(color: Colors.red)),
+        title: const Text('Toppings Screens', style: TextStyle(color: Colors.red)),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -32,7 +32,7 @@ class ToppingsScreen extends StatelessWidget {
             Container(
               color: Colors.red,
               padding: EdgeInsets.all(16.0),
-              child: Row(
+              child: const Row(
                 children: [
                   CircleAvatar(
                     radius: 30,
@@ -64,38 +64,39 @@ class ToppingsScreen extends StatelessWidget {
                 ],
               ),
             ),
-            _buildToppingItem('Caramelo', '../assets/images/caramelo.jpg', 15.00),
-            _buildToppingItem('Fresas', '../assets/images/fresa.jpg', 10.00),
-            _buildToppingItem('Cerezas', '../assets/images/cerezas.jpg', 10.00),
+
+            //Metodo para contruir el topping. pasandole el nombre y la imagen
+            _construirItemTopping('Caramelo', '../assets/images/caramelo.jpg', 15.00),
+            _construirItemTopping('Fresas', '../assets/images/fresa.jpg', 10.00),
+            _construirItemTopping('Cerezas', '../assets/images/cerezas.jpg', 10.00),
+
+            Padding(
+              padding: const EdgeInsets.all(56.0),
+              child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  
+                  padding: const EdgeInsets.symmetric(vertical: 25.0, horizontal: 10.0), //Regulo el padding del boton, o el tamaño, es lo mismo mor
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                ),
+                child: const Text(
+                  'ORDENAR AHORA',
+                  style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
           ],
         ),
       ),
-      bottomNavigationBar: BottomAppBar(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: ElevatedButton(
-            onPressed: () {},
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
-              padding: EdgeInsets.symmetric(vertical: 16.0),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-            ),
-            child: Text(
-              'ORDENAR AHORA',
-              style: TextStyle(color: Colors.white, fontSize: 8, fontWeight: FontWeight.bold),
-            ),
-          ),
-        ),
-      ),
-      
     );
   }
 
-  Widget _buildToppingItem(String title, String imagePath, double price) {
+  Widget _construirItemTopping(String title, String imagePath, double price) {
     return Card(
-      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
