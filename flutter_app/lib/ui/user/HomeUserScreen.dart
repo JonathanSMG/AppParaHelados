@@ -20,7 +20,7 @@ class _HomeUserScreenState extends State<HomeUserScreen> {
         title: Text(widget.title),
         actions: [
           CircleAvatar(
-            backgroundImage: NetworkImage('\AppParaHelados\flutter_app\lib\img'),
+            backgroundImage: AssetImage('assets/img/HELADO1.png'), // Corrige esta línea
           ),
           SizedBox(width: 10),
         ],
@@ -55,19 +55,19 @@ class _HomeUserScreenState extends State<HomeUserScreen> {
               ),
             ),
             IceCreamCard(
-              imageUrl: 'https://example.com/helado1.jpg',
+              imageUrl: 'assets/img/HELADO1.png', // Corrige esta línea
               title: 'Dulce Tropical',
               description: 'Helado de Fresa',
               price: 'S/. 3.00',
             ),
             IceCreamCard(
-              imageUrl: 'https://example.com/helado2.jpg',
+              imageUrl: 'assets/img/HELADO2.png', // Corrige esta línea
               title: 'Galaxia Dulce',
               description: 'Helado de Vainilla',
               price: 'S/. 5.00',
             ),
             IceCreamCard(
-              imageUrl: 'https://example.com/helado3.jpg',
+              imageUrl: 'assets/img/HELADO3.png', // Corrige esta línea
               title: 'Cap de Caramelo',
               description: 'Helado de Chocolate',
               price: 'S/. 6.00',
@@ -121,7 +121,7 @@ class IceCreamCard extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Row(
           children: [
-            Image.network(
+            Image.asset(
               imageUrl,
               width: 80,
               height: 80,
