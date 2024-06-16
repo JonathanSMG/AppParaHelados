@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => SplashScreen(),
         LOGIN: (context) => LoginScreen(),
         HOME_USER: (context) => const HomeUserScreen(title: 'App para helados'),
+        
       },
     );
   }
