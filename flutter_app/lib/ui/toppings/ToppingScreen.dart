@@ -36,7 +36,7 @@ class ToppingsScreen extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 30,
-                    backgroundImage: AssetImage('assets/fresa.jpg'),
+                    backgroundImage: AssetImage('../assets/images/HELADO1.png'),
                   ),
                   SizedBox(width: 10),
                   Column(
@@ -64,9 +64,9 @@ class ToppingsScreen extends StatelessWidget {
                 ],
               ),
             ),
-            _buildToppingItem('Caramelo', 'assets/caramelo.jpg', 15.00),
-            _buildToppingItem('Fresas', 'assets/fresas.jpg', 10.00),
-            _buildToppingItem('Cerezas', 'assets/cerezas.jpg', 10.00),
+            _buildToppingItem('Caramelo', '../assets/images/caramelo.jpg', 15.00),
+            _buildToppingItem('Fresas', '../assets/images/fresa.jpg', 10.00),
+            _buildToppingItem('Cerezas', '../assets/images/cerezas.jpg', 10.00),
           ],
         ),
       ),
@@ -84,7 +84,7 @@ class ToppingsScreen extends StatelessWidget {
             ),
             child: Text(
               'ORDENAR AHORA',
-              style: TextStyle(color: Colors.white, fontSize: 20),
+              style: TextStyle(color: Colors.white, fontSize: 8, fontWeight: FontWeight.bold),
             ),
           ),
         ),
