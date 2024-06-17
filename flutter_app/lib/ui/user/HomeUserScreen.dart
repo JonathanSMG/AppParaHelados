@@ -18,9 +18,9 @@ class _HomeUserScreenState extends State<HomeUserScreen> {
         elevation: 0,
         leading: Icon(Icons.menu),
         title: Text(widget.title),
-        actions: [
+        actions: const [
           CircleAvatar(
-            backgroundImage: AssetImage('assets/img/HELADO1.png'), // Corrige esta línea
+            backgroundImage: AssetImage('../assets/images/HELADO1.png'), // Corrige esta línea
           ),
           SizedBox(width: 10),
         ],
@@ -34,7 +34,7 @@ class _HomeUserScreenState extends State<HomeUserScreen> {
               padding: EdgeInsets.all(16),
               child: Row(
                 children: [
-                  Expanded(
+                  const Expanded(
                     child: Text(
                       'Consumete un helado pe\'',
                       style: TextStyle(
@@ -55,19 +55,19 @@ class _HomeUserScreenState extends State<HomeUserScreen> {
               ),
             ),
             IceCreamCard(
-              imageUrl: 'assets/img/HELADO1.png', // Corrige esta línea
+              imageUrl: '../assets/images/HELADO1.png', // Corrige esta línea
               title: 'Dulce Tropical',
               description: 'Helado de Fresa',
               price: 'S/. 3.00',
             ),
             IceCreamCard(
-              imageUrl: 'assets/img/HELADO2.png', // Corrige esta línea
+              imageUrl: '../assets/images/HELADO2.png', // Corrige esta línea
               title: 'Galaxia Dulce',
               description: 'Helado de Vainilla',
               price: 'S/. 5.00',
             ),
             IceCreamCard(
-              imageUrl: 'assets/img/HELADO3.png', // Corrige esta línea
+              imageUrl: '../assets/images/HELADO3.png', // Corrige esta línea
               title: 'Cap de Caramelo',
               description: 'Helado de Chocolate',
               price: 'S/. 6.00',
@@ -77,22 +77,14 @@ class _HomeUserScreenState extends State<HomeUserScreen> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.redAccent,
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.feed),
-            label: 'Feed',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: 'Cart',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.mail),
-            label: 'Inbox',
+            label: 'Ajustes',
           ),
         ],
       ),
