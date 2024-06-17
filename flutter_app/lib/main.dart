@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/rutas/constants.dart';
 import 'package:flutter_app/ui/SplashScreen.dart';
+import 'package:flutter_app/ui/registro/RegistroScreen.dart';
 import 'package:flutter_app/ui/user/HomeUserScreen.dart';
 import 'package:flutter_app/ui/login/LoginScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,7 +18,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'App Para Helados',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 255, 255, 255)), // Utiliza un color semilla
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color.fromARGB(
+                255, 255, 255, 255)), // Utiliza un color semilla
         textTheme: GoogleFonts.montserratTextTheme(
           Theme.of(context).textTheme,
         ),
@@ -25,8 +28,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => SplashScreen(),
         LOGIN: (context) => LoginScreen(),
+        REGISTRO: (context) => RegistroScreen(),
         HOME_USER: (context) => const HomeUserScreen(title: 'App para helados'),
-        
       },
     );
   }

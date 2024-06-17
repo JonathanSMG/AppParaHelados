@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/rutas/constants.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
@@ -7,10 +8,15 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       // Barra de la aplicación con el título
       appBar: AppBar(
-        title: const Text('Heladería Sammy'),
-        backgroundColor: Colors.purple,
+        title: const Text(
+          'Heladería Sammy',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Color.fromARGB(255, 195, 79, 79),
       ),
-      // Cuerpo principal de la pantalla
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Center(
@@ -19,10 +25,10 @@ class LoginScreen extends StatelessWidget {
             children: [
               // Imagen del pingüino (logo)
               Image.asset(
-                '../assets/images/logo.png', // Ruta de la imagen en el proyecto
+                'assets/images/logo.png', // Ruta de la imagen en el proyecto
                 height: 150,
               ),
-             const SizedBox(height: 24),
+              const SizedBox(height: 24),
               // Campo de texto para el correo electrónico
               const TextField(
                 decoration: InputDecoration(
@@ -37,7 +43,8 @@ class LoginScreen extends StatelessWidget {
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Contraseña',
-                  suffixIcon: Icon(Icons.visibility_off), // Icono para mostrar/ocultar contraseña
+                  suffixIcon: Icon(Icons
+                      .visibility_off), // Icono para mostrar/ocultar contraseña
                 ),
               ),
               const SizedBox(height: 24),
@@ -48,13 +55,18 @@ class LoginScreen extends StatelessWidget {
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red, // Color de fondo del botón
-                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                 ),
                 child: const Text(
                   'Iniciar Sesión',
-                  style: TextStyle(fontSize: 18),
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white,
+                  ),
                 ),
               ),
+
               const SizedBox(height: 16),
               // Texto para la opción de registro
               RichText(
@@ -68,7 +80,7 @@ class LoginScreen extends StatelessWidget {
                       // Acción al presionar 'Regístrate'
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          // Acción al presionar 'Regístrate'
+                          Navigator.of(context).pushReplacementNamed(REGISTRO);
                         },
                     ),
                   ],

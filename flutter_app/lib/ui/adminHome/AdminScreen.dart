@@ -34,7 +34,7 @@ class AdminPage extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 30,
-                    backgroundImage: AssetImage('assets/profile.jpg'),
+                    backgroundImage: AssetImage('assets/images/profile.png'),
                   ),
                   SizedBox(height: 10),
                   Text(
@@ -43,7 +43,10 @@ class AdminPage extends StatelessWidget {
                   ),
                   Text(
                     'ZAVALA REYES',
-                    style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -84,9 +87,9 @@ class AdminPage extends StatelessWidget {
                 ],
               ),
             ),
-            _buildItemList('Chocolate', 'assets/chocolate.jpg'),
-            _buildItemList('Vainilla', 'assets/vainilla.jpg'),
-            _buildItemList('Fresa', 'assets/fresa.jpg'),
+            _buildItemList('Chocolate', 'assets/images/chocolate.jpg'),
+            _buildItemList('Vainilla', 'assets/images/vainilla.jpg'),
+            _buildItemList('Fresa', 'assets/images/fresa.jpg'),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Row(
@@ -107,9 +110,9 @@ class AdminPage extends StatelessWidget {
                 ],
               ),
             ),
-            _buildItemList('Granola', 'assets/granola.jpg'),
-            _buildItemList('Galleta Triturada', 'assets/galleta.jpg'),
-            _buildItemList('Coco', 'assets/coco.jpg'),
+            _buildItemList('Granola', 'assets/images/granola.jpg'),
+            _buildItemList('Galleta Triturada', 'assets/images/galleta.jpg'),
+            _buildItemList('Coco', 'assets/images/coco.jpg'),
           ],
         ),
       ),
@@ -133,7 +136,8 @@ class AdminPage extends StatelessWidget {
     return Card(
       margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: ListTile(
-        leading: Image.asset(imagePath, width: 50, height: 50, fit: BoxFit.cover),
+        leading:
+            Image.asset(imagePath, width: 50, height: 50, fit: BoxFit.cover),
         title: Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
